@@ -71,8 +71,28 @@ const loginController = async (req, res) => {
     res.status(500).send({
       success: false,
       message: "Login API Error ",
+      error,
     });
   }
 };
 
-module.exports = { registerController, loginController };
+//Get Current User
+const currentUserController = async (req, res) => {
+  try {
+    const user = await userModel.findOne({ _id: req.body.userId });
+    return res.status(200).send({
+      success: true,
+      message: "User Fetched Sucessfully",
+      user,
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).send({
+      success: fasle,
+      message: "Unable to get Current User",
+      error,
+    });
+  }
+};
+
+module.exports = { registerController, loginController, currentUserController };
