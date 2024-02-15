@@ -57,7 +57,9 @@ const navbar = () => {
         <Link to='/aboutus' className='hover:underline underline-offset-4'>
           About Us
         </Link>
-        <Link to='/requestblood' className='hover:underline underline-offset-4'>Request Blood</Link>
+        <Link to='/requestblood' className='hover:underline underline-offset-4'>
+          Request Blood
+        </Link>
         <Dropdown
           menu={{
             items,
@@ -65,13 +67,13 @@ const navbar = () => {
           className='cursor-pointer'
         >
           <a onClick={(e) => e.preventDefault()}>
-            <Space className="flex gap-0">
+            <Space className='flex gap-0'>
               Register Now
               <RiArrowDropDownLine size={24} />
             </Space>
           </a>
         </Dropdown>
-        <Button type='default' className='w-24 font-medium'>
+        <Button type='primary' className='w-24 font-medium bg-primary-color'>
           Login
         </Button>
       </div>

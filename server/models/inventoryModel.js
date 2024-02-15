@@ -35,13 +35,6 @@ const inventorySchema = new mongoose.Schema(
         return this.inventoryType === "in";
       },
     },
-    user: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
-      required: function () {
-        return this.inventoryType === "out";
-      },
-    },
   },
   { timestamps: true }
 );
