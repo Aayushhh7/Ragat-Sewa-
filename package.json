@@ -18,6 +18,8 @@
   },
   "homepage": "https://github.com/Aayushhh7/Ragat-Sewa-#readme",
   "dependencies": {
+    "antd": "^5.14.1",
+    "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
     "colors": "^1.4.0",
     "cors": "^2.8.5",

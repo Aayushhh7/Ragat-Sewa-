@@ -8,22 +8,78 @@ const OrgHospistalForm = ({ type }) => {
         label={type === "hospital" ? "Hospital Name" : "Organization Name"}
         name={type === "hospital" ? "hospitalName" : "organizationName"}
         className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
       >
         <Input placeholder='Name' className='border rounded-sm py-1' />
       </Form.Item>
-      <Form.Item label='Phone' name='phone' className='font-semibold'>
+      <Form.Item
+        label='Phone'
+        name='phone'
+        className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
+      >
         <Input placeholder='Phone Number' className='border rounded-sm py-1' />
       </Form.Item>
-      <Form.Item label='Email' name='email' className='font-semibold'>
+      <Form.Item
+        label='Email'
+        name='email'
+        className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
+      >
         <Input placeholder='Email' className='border rounded-sm py-1' />
       </Form.Item>
-      <Form.Item label='Password' name='password' className='font-semibold'>
+      <Form.Item
+        label='Password'
+        name='password'
+        className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
+      >
         <Input placeholder='Password' className='border rounded-sm py-1' />
       </Form.Item>
-      <Form.Item label='Website' name='website' className='font-semibold'>
+      <Form.Item
+        label='Website'
+        name='website'
+        className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
+      >
         <Input placeholder='Website' className='border rounded-sm py-1' />
       </Form.Item>
-      <Form.Item label='Address' name='address' className='font-semibold'>
+      <Form.Item
+        label='Address'
+        name='address'
+        className='font-semibold'
+        rules={[
+          {
+            required: true,
+            message: "Required",
+          },
+        ]}
+      >
         <Input placeholder='Address' className='border rounded-sm py-1' />
       </Form.Item>
     </>

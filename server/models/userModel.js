@@ -1,39 +1,67 @@
 const mongoose = require("mongoose");
-
 const userSchema = new mongoose.Schema(
   {
-    role: {
+    userType: {
       type: String,
-      required: [true, "role is required"],
-      enum: ["admin", "organization", "doner", "hospital"],
+      required: [true, "user type is required"],
+      enum: ["donor", "organization", "admin", "hospital"],
     },
+    // is only required if userType is donor or admin
     name: {
       type: String,
       required: function () {
-        if (this.role === "user" || this.role == "admin") {
+        if (this.userType === "admin" || this.userType == "donor") {
           return true;
         }
         return false;
       },
+      message: "Name is required",
     },
+
+    // is only required if userType is organization
     organizationName: {
       type: String,
       required: function () {
-        if (this.role === "organization") {
+        if (this.userType === "organization") {
           return true;
         }
         return false;
       },
     },
+
+    // is only required if userType is hospital
     hospitalName: {
       type: String,
       required: function () {
-        if (this.role === "hospital") {
+        if (this.userType === "hospital") {
           return true;
         }
         return false;
       },
     },
+
+    // is only required if userType is organization or hospital
+    website: {
+      type: String,
+      required: function () {
+        if (this.userType == "organization" || this.userType == "hospital") {
+          return true;
+        }
+        return false;
+      },
+    },
+    // is only required if userType is donor
+    bloodGroup: {
+      type: String,
+      required: function () {
+        if (this.userType == "donor") {
+          return true;
+        }
+        return false;
+      },
+    },
+
+    // Common for all userType
     email: {
       type: String,
       required: [true, "Email is required"],

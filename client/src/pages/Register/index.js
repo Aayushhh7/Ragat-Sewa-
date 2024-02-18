@@ -1,15 +1,35 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./../../components/Navbar";
-import { Form, Input, Radio, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Input, Radio, Button, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
 import OrgHospistalForm from "./OrgHospistalForm";
+import { RegisterUser } from "../../apicalls/users";
 
 const Register = () => {
   const [type, setType] = React.useState("donor");
+  const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await RegisterUser({
+        ...values,
+        userType: type,
+      });
+      if (response.success) {
+        message.success(response.message);
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div>
@@ -40,13 +60,33 @@ const Register = () => {
           {type === "donor" && (
             <>
               {""}
-              <Form.Item label='Name' name='name' className='font-semibold'>
+              <Form.Item
+                label='Name'
+                name='name'
+                className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
+              >
                 <Input
                   placeholder='Full Name'
                   className='border rounded-sm py-1'
                 />
               </Form.Item>
-              <Form.Item label='Phone' name='phone' className='font-semibold'>
+              <Form.Item
+                label='Phone'
+                name='phone'
+                className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
+              >
                 <Input
                   placeholder='Phone Number'
                   className='border rounded-sm py-1'
@@ -56,6 +96,12 @@ const Register = () => {
                 label='Blood Group'
                 name='bloodGroup'
                 className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
               >
                 <Input
                   placeholder='Blood Group'
@@ -66,19 +112,41 @@ const Register = () => {
                 label='Address'
                 name='address'
                 className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
               >
                 <Input
                   placeholder='Address'
                   className='border rounded-sm py-1'
                 />
               </Form.Item>
-              <Form.Item label='Email' name='email' className='font-semibold'>
+              <Form.Item
+                label='Email'
+                name='email'
+                className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
+              >
                 <Input placeholder='Email' className='border rounded-sm py-1' />
               </Form.Item>
               <Form.Item
                 label='Password'
                 name='password'
                 className='font-semibold'
+                rules={[
+                  {
+                    required: true,
+                    message: "Required",
+                  },
+                ]}
               >
                 <Input.Password
                   type='password'

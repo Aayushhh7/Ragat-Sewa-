@@ -5,33 +5,30 @@ const morgan = require("morgan");
 const cors = require("cors");
 const connectDB = require("./config/db");
 
-//dot config
-dotenv.config();
-
-//mongodb connection
-connectDB();
-
-//rest object
+// Create express app
 const app = express();
 
-//middlewares
+// Dot config
+dotenv.config();
+
+// MongoDB connection
+connectDB();
+
+// Middlewares
 app.use(express.json());
-app.use(cors());
-app.use(morgan("dev"));
 
-//routes
-// 1 test
-app.use("/api/test", require("./routes/testRoutes"));
-app.use("/api/auth", require("./routes/authRoutes"));
-app.use("/api/inventory", require("./routes/inventoryRoutes"));
+const userRoute = require("./routes/userRoute");
 
-//port
+// Routes
+app.use("/api/users", userRoute);
+
+// Port
 const PORT = process.env.PORT || 8080;
 
-//listen
+// Listen
 app.listen(PORT, () => {
   console.log(
-    `Node Server Running In ${process.env.DEV_MODE} Mode on Port ${process.env.PORT}`
+    `Node Server Running In ${process.env.DEV_MODE} Mode on Port ${PORT}`
       .bgBlue.white
   );
 });

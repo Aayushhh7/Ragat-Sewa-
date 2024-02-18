@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "./../../components/Navbar";
-import { Form, Input, Radio, Button } from "antd";
-import { Link } from "react-router-dom";
+import { Form, Input, Radio, Button, message } from "antd";
+import { Link, useNavigate } from "react-router-dom";
+import { LoginUser } from "../../apicalls/users";
 
 const Login = () => {
   const [type, setType] = React.useState("donor");
+  const navigate = useNavigate();
 
-  const onFinish = (values) => {
-    console.log(values);
+  const onFinish = async (values) => {
+    try {
+      const response = await LoginUser(values);
+      if (response.success) {
+        message.success(response.message);
+        localStorage.setItem("token", response.data);
+        navigate("/");
+      } else {
+        throw new Error(response.message);
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem("token")) {
+      navigate("/");
+    }
+  }, []);
 
   return (
     <div>
@@ -36,10 +55,30 @@ const Login = () => {
             <Radio value='organization'>Organization</Radio>
           </Radio.Group>
 
-          <Form.Item label='Email' name='email' className='font-semibold'>
+          <Form.Item
+            label='Email'
+            name='email'
+            className='font-semibold'
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          >
             <Input placeholder='Email' className='border rounded-sm py-1' />
           </Form.Item>
-          <Form.Item label='Password' name='password' className='font-semibold'>
+          <Form.Item
+            label='Password'
+            name='password'
+            className='font-semibold'
+            rules={[
+              {
+                required: true,
+                message: "Required",
+              },
+            ]}
+          >
             <Input.Password
               type='password'
               placeholder='Password'
