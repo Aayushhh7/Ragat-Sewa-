@@ -4,9 +4,10 @@ module.exports = {
   theme: {
     colors: {
       "primary-color": "#6A0B37",
+      transparent: 'transparent',
     },
     fontFamily: {
-      'Montserrat': ["Montserrat"],
+      Montserrat: ["Montserrat"],
     },
     extend: {},
   },
@@ -14,4 +15,4 @@ module.exports = {
   // corePlugins:{
   //   preflight: false
   // }
-} ;
+};

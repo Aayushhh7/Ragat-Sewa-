@@ -1,5 +1,6 @@
 import React from "react";
 import { Form, Input } from "antd";
+import { getAntdInputValidation } from "../../utils/helper";
 
 const OrgHospistalForm = ({ type }) => {
   return (
@@ -8,12 +9,7 @@ const OrgHospistalForm = ({ type }) => {
         label={type === "hospital" ? "Hospital Name" : "Organization Name"}
         name={type === "hospital" ? "hospitalName" : "organizationName"}
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Name' className='border rounded-sm py-1' />
       </Form.Item>
@@ -21,12 +17,7 @@ const OrgHospistalForm = ({ type }) => {
         label='Phone'
         name='phone'
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Phone Number' className='border rounded-sm py-1' />
       </Form.Item>
@@ -34,12 +25,7 @@ const OrgHospistalForm = ({ type }) => {
         label='Email'
         name='email'
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Email' className='border rounded-sm py-1' />
       </Form.Item>
@@ -47,12 +33,7 @@ const OrgHospistalForm = ({ type }) => {
         label='Password'
         name='password'
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Password' className='border rounded-sm py-1' />
       </Form.Item>
@@ -60,12 +41,7 @@ const OrgHospistalForm = ({ type }) => {
         label='Website'
         name='website'
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Website' className='border rounded-sm py-1' />
       </Form.Item>
@@ -73,12 +49,7 @@ const OrgHospistalForm = ({ type }) => {
         label='Address'
         name='address'
         className='font-semibold'
-        rules={[
-          {
-            required: true,
-            message: "Required",
-          },
-        ]}
+        rules={getAntdInputValidation()}
       >
         <Input placeholder='Address' className='border rounded-sm py-1' />
       </Form.Item>

@@ -4,23 +4,31 @@ import { Form, Input, Radio, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import OrgHospistalForm from "./OrgHospistalForm";
 import { RegisterUser } from "../../apicalls/users";
+import { getAntdInputValidation } from "../../utils/helper";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "../../redux/loadersSlice";
 
 const Register = () => {
   const [type, setType] = React.useState("donor");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     try {
+      dispatch(SetLoading(true));
       const response = await RegisterUser({
         ...values,
         userType: type,
       });
+      dispatch(SetLoading(false));
       if (response.success) {
         message.success(response.message);
+        navigate("/login");
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
+      dispatch(SetLoading(false));
       message.error(error.message);
     }
   };
@@ -33,7 +41,7 @@ const Register = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='flex justify-center items-center my-12'>
         <Form
           layout='vertical'
@@ -64,12 +72,7 @@ const Register = () => {
                 label='Name'
                 name='name'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input
                   placeholder='Full Name'
@@ -80,12 +83,7 @@ const Register = () => {
                 label='Phone'
                 name='phone'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input
                   placeholder='Phone Number'
@@ -96,12 +94,7 @@ const Register = () => {
                 label='Blood Group'
                 name='bloodGroup'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input
                   placeholder='Blood Group'
@@ -112,12 +105,7 @@ const Register = () => {
                 label='Address'
                 name='address'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input
                   placeholder='Address'
@@ -128,12 +116,7 @@ const Register = () => {
                 label='Email'
                 name='email'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input placeholder='Email' className='border rounded-sm py-1' />
               </Form.Item>
@@ -141,12 +124,7 @@ const Register = () => {
                 label='Password'
                 name='password'
                 className='font-semibold'
-                rules={[
-                  {
-                    required: true,
-                    message: "Required",
-                  },
-                ]}
+                rules={getAntdInputValidation()}
               >
                 <Input.Password
                   type='password'

@@ -5,26 +5,30 @@ import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { BrowserRouter } from "react-router-dom";
 import { ConfigProvider } from "antd";
+import { Provider } from "react-redux";
+import store from "./redux/store";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <ConfigProvider
-    theme={{
-      components: {
-        Button: {
-          colorPrimary: "#6A0B37",
-          colorPrimaryHover: "#79234b",
+  <Provider store={store}>
+    <ConfigProvider
+      theme={{
+        components: {
+          Button: {
+            colorPrimary: "#6A0B37",
+            colorPrimaryHover: "#79234b",
+          },
         },
-      },
-      token: {
-        colorPrimary: "#6A0B37",
-      },
-    }}
-  >
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </ConfigProvider>
+        token: {
+          colorPrimary: "#6A0B37",
+        },
+      }}
+    >
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
+    </ConfigProvider>
+  </Provider>
 );
 
 // If you want to start measuring performance in your app, pass a function

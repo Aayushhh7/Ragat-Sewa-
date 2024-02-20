@@ -3,14 +3,20 @@ import Navbar from "./../../components/Navbar";
 import { Form, Input, Radio, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apicalls/users";
+import { useDispatch } from "react-redux";
+import { SetLoading } from "../../redux/loadersSlice";
+import { getAntdInputValidation } from "../../utils/helper";
 
 const Login = () => {
   const [type, setType] = React.useState("donor");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onFinish = async (values) => {
     try {
+      dispatch(SetLoading(true));
       const response = await LoginUser(values);
+      dispatch(SetLoading(false));
       if (response.success) {
         message.success(response.message);
         localStorage.setItem("token", response.data);
@@ -19,6 +25,7 @@ const Login = () => {
         throw new Error(response.message);
       }
     } catch (error) {
+      dispatch(SetLoading(false));
       message.error(error.message);
     }
   };
@@ -31,7 +38,7 @@ const Login = () => {
 
   return (
     <div>
-      <Navbar />
+      {/* <Navbar /> */}
       <div className='flex justify-center items-center my-12'>
         <Form
           layout='vertical'
@@ -59,12 +66,7 @@ const Login = () => {
             label='Email'
             name='email'
             className='font-semibold'
-            rules={[
-              {
-                required: true,
-                message: "Required",
-              },
-            ]}
+            rules={getAntdInputValidation()}
           >
             <Input placeholder='Email' className='border rounded-sm py-1' />
           </Form.Item>
@@ -72,12 +74,7 @@ const Login = () => {
             label='Password'
             name='password'
             className='font-semibold'
-            rules={[
-              {
-                required: true,
-                message: "Required",
-              },
-            ]}
+            rules={getAntdInputValidation()}
           >
             <Input.Password
               type='password'
