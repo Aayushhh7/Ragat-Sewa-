@@ -17,10 +17,12 @@ root.render(
           Button: {
             colorPrimary: "#6A0B37",
             colorPrimaryHover: "#79234b",
+            colorBorder: "#6A0B37",
           },
         },
         token: {
           colorPrimary: "#6A0B37",
+          colorBorder: "#6A0B37",
         },
       }}
     >

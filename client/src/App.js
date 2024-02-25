@@ -9,6 +9,7 @@ import AboutUs from "./pages/AboutUs";
 import BloodRequest from "./pages/BloodRequest";
 import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
+import Profile from "./pages/Profile";
 
 function App() {
   const { loading } = useSelector((state) => state.loaders);
@@ -21,6 +22,14 @@ function App() {
           element={
             <ProtectedPage>
               <Home />
+            </ProtectedPage>
+          }
+        />
+        <Route
+          path='/profile'
+          element={
+            <ProtectedPage>
+              <Profile />
             </ProtectedPage>
           }
         />

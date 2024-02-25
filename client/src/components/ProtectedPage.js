@@ -52,11 +52,15 @@ function ProtectedPage({ children }) {
           <div className='flex items-center gap-1'>
             <i className='ri-shield-user-fill'></i>
             <div className='flex flex-col'>
-              <span className='mr-5 text-md cursor-pointer'>
+              <span
+                className='mr-5 text-md cursor-pointer'
+                onClick={() => navigate("/profile")}
+              >
                 {getLoggedInUserName(currentUser).toUpperCase()}
               </span>
             </div>
-            <i className='ri-logout-box-r-line ml-5 cursor-pointer'
+            <i
+              className='ri-logout-box-r-line ml-5 cursor-pointer'
               onClick={() => {
                 localStorage.removeItem("token");
                 navigate("/login");
@@ -65,7 +69,7 @@ function ProtectedPage({ children }) {
           </div>
         </div>
         {/* body */}
-        <div className='px-5 py-3'>{children}</div>
+        <div className='px-5 py-2'>{children}</div>
       </div>
     )
   );

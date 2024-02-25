@@ -35,7 +35,10 @@ const OrgHospistalForm = ({ type }) => {
         className='font-semibold'
         rules={getAntdInputValidation()}
       >
-        <Input placeholder='Password' className='border rounded-sm py-1' />
+        <Input.Password
+          placeholder='Password'
+          className='border rounded-sm py-1'
+        />
       </Form.Item>
       <Form.Item
         label='Website'
@@ -43,7 +46,11 @@ const OrgHospistalForm = ({ type }) => {
         className='font-semibold'
         rules={getAntdInputValidation()}
       >
-        <Input placeholder='Website' className='border rounded-sm py-1' />
+        <Input
+          placeholder='Website'
+          type='website'
+          className='border rounded-sm py-1'
+        />
       </Form.Item>
       <Form.Item
         label='Address'
