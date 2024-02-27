@@ -1,8 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const colors = require("colors");
-const morgan = require("morgan");
-const cors = require("cors");
 const connectDB = require("./config/db");
 
 // Create express app
@@ -18,17 +15,19 @@ connectDB();
 app.use(express.json());
 
 const userRoute = require("./routes/userRoute");
+const inventoryRoute = require("./routes/inventoryRoute");
 
 // Routes
 app.use("/api/users", userRoute);
+app.use("/api/inventory", inventoryRoute);
 
 // Port
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 5000;
 
 // Listen
 app.listen(PORT, () => {
   console.log(
-    `Node Server Running In ${process.env.DEV_MODE} Mode on Port ${PORT}`
-      .bgBlue.white
+    `Node Server Running In ${process.env.DEV_MODE} Mode on Port ${PORT}`.bgBlue
+      .white
   );
 });

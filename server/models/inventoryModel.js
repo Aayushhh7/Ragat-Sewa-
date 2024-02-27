@@ -16,11 +16,18 @@ const inventorySchema = new mongoose.Schema(
       type: Number,
       require: [true, "Blood Quanity is required"],
     },
+    email: {
+      type: String,
+      required: [true, "Email is required"],
+      unique: true,
+    },
     organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "users",
+      ref: "organizations",
       required: [true, "Organization is required"],
     },
+
+    // if inventoryType is "out" then hospital is required
     hospital: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
@@ -28,6 +35,8 @@ const inventorySchema = new mongoose.Schema(
         return this.inventoryType === "out";
       },
     },
+
+    // if inventoryType is "in" then donor is required
     donor: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "users",
@@ -39,4 +48,6 @@ const inventorySchema = new mongoose.Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Inventory", inventorySchema);
+const Inventory = mongoose.model("inventories", inventorySchema);
+
+module.exports = Inventory;

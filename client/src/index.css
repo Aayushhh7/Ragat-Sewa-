@@ -41,6 +41,7 @@ select {
   padding: 0px !important;
 }
 
-.ant-modal-footer{
-  background-color: #6a0b37;
+table {
+  border: 1.5px solid #9f9f9f !important;
+  border-radius: 3px !important;
 }

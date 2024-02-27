@@ -49,6 +49,14 @@ router.post("/login", async (req, res) => {
       });
     }
 
+    // Check if userType matches
+    if (user.userType !== req.body.userType) {
+      return res.send({
+        success: false,
+        message: `User is not registered as a ${req.body.userType}`,
+      });
+    }
+
     // Compare password
     const validPassword = await bcrypt.compare(
       req.body.password,
@@ -64,7 +72,7 @@ router.post("/login", async (req, res) => {
 
     // generate token
     const token = jwt.sign({ userId: user._id }, process.env.JWT_SECRET, {
-      expiresIn: "6hr",
+      expiresIn: "2d",
     });
 
     return res.send({

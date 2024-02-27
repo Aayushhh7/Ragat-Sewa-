@@ -48,7 +48,7 @@
   "main": "tailwind.config.js",
   "author": "Ayush",
   "license": "ISC",
-  "proxy": "http://localhost:8080",
+  "proxy": "http://localhost:5000",
   "devDependencies": {
     "autoprefixer": "^10.4.17",
     "postcss": "^8.4.35",

@@ -2,12 +2,13 @@ import { Modal, Form, Radio, Input, Select, message } from "antd";
 import React, { useState } from "react";
 import { getAntdInputValidation } from "../../../utils/helper";
 import { SetLoading } from "../../../redux/loadersSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AddInventory } from "../../../apicalls/inventory";
 
 const { Option } = Select;
 
 function InventoryForm({ open, setOpen, reloadData }) {
+  const { currentUser } = useSelector((state) => state.users);
   const [form] = Form.useForm();
   const [inventoryType, setInventoryType] = useState("in");
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function InventoryForm({ open, setOpen, reloadData }) {
       const response = await AddInventory({
         ...values,
         inventoryType,
+        organization: currentUser._id,
       });
       dispatch(SetLoading(false));
       if (response.success) {
@@ -90,7 +92,7 @@ function InventoryForm({ open, setOpen, reloadData }) {
 
         <Form.Item
           label='Quantity (ML)'
-          name='quantity'
+          name='quantityofBlood'
           rules={getAntdInputValidation()}
         >
           <Input
