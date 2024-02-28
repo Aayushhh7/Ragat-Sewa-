@@ -1,6 +1,7 @@
 const express = require("express");
 const dotenv = require("dotenv");
 const connectDB = require("./config/db");
+const cors = require("cors");
 
 // Create express app
 const app = express();
@@ -13,6 +14,7 @@ connectDB();
 
 // Middlewares
 app.use(express.json());
+app.use(cors());
 
 const userRoute = require("./routes/userRoute");
 const inventoryRoute = require("./routes/inventoryRoute");

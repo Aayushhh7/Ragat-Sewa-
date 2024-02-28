@@ -34,14 +34,14 @@ function Inventory() {
         if (record.inventoryType === "in") {
           return record.donor.name;
         } else {
-          return record.hospital.name;
+          return record.hospital.hospitalName;
         }
       },
     },
     {
       title: "Date",
-      dataIndex: "Created At",
-      render: (text) => getDateformat()
+      dataIndex: "createdAt",
+      render: (text) => getDateformat(text),
     },
   ];
 
@@ -72,10 +72,10 @@ function Inventory() {
           Add Inventory
         </Button>
       </div>
-      <Table columns={columns} dataSource={data} 
-      className="mt-3"
-      />
-      {open && <InventoryForm open={open} setOpen={setOpen} />}
+      <Table columns={columns} dataSource={data} className='mt-3' />
+      {open && (
+        <InventoryForm open={open} setOpen={setOpen} reloadData={getData} />
+      )}
     </div>
   );
 }

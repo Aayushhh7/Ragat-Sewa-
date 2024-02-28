@@ -60,13 +60,13 @@ router.post("/add", authMiddleware, async (req, res) => {
         },
       ]);
 
-      const totalOut = totalOutofRequestedGroup[0].total;
+      const totalOut = totalOutofRequestedGroup[0]?.total || 0;
 
       const availableQuantityofRequestedGroup = totalIn - totalOut;
 
       if (availableQuantityofRequestedGroup < requestedQuantity) {
         throw new Error(
-          `Only ${availableQuantityofRequestedGroup} units of ${requestedGroup} is available`
+          `Only ${availableQuantityofRequestedGroup} units of ${requestedGroup} blood is available`
         );
       }
 
@@ -89,6 +89,7 @@ router.post("/add", authMiddleware, async (req, res) => {
 router.get("/get", authMiddleware, async (req, res) => {
   try {
     const inventory = await Inventory.find({ organization: req.body.userId })
+      .sort({ createdAt: -1 })
       .populate("donor")
       .populate("hospital");
     return res.send({

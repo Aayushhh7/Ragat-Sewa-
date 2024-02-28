@@ -1,8 +1,11 @@
 const router = require("express").Router();
+
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const User = require("../models/userModel");
-const authMiddleWare = require("../middlewares/authMiddleWare");
+const authMiddleWare = require("../middlewares/authMiddleware");
+const Inventory = require("../models/inventoryModel");
+const mongoose = require("mongoose");
 
 // register new user
 router.post("/register", async (req, res) => {
@@ -96,6 +99,71 @@ router.get("/get-current-user", authMiddleWare, async (req, res) => {
       success: true,
       message: "User Fetched Successfully",
       data: user,
+    });
+  } catch (error) {
+    return res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+//get all unique donors
+router.get("/get-all-donors", authMiddleWare, async (req, res) => {
+  try {
+    // get all unique donor ids from inventory
+    const organization = new mongoose.Types.ObjectId(req.body.userId);
+    const uniqueDonorIds = await Inventory.distinct("donor", {
+      organization,
+    });
+
+    // Another way to fetch the unique donor ids
+    // aggregate([
+    //   {
+    //     $match: {
+    //       inventoryType: "in",
+    //       organization,
+    //     },
+    //   },
+    //   {
+    //     $group: {
+    //       _id: "$donor",
+    //     },
+    //   },
+    // ]);
+
+    const donors = await User.find({
+      _id: { $in: uniqueDonorIds },
+    });
+    return res.send({
+      success: true,
+      message: "Donors Fetched Successfully",
+      data: donors,
+    });
+  } catch (error) {
+    return res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+router.get("/get-all-hospitals", authMiddleWare, async (req, res) => {
+  try {
+    // get all unique hospital ids from inventory
+    const organization = new mongoose.Types.ObjectId(req.body.userId);
+    const uniqueHospitalIds = await Inventory.distinct("hospital", {
+      organization,
+    });
+
+    const hospitals = await User.find({
+      _id: { $in: uniqueHospitalIds },
+    });
+
+    return res.send({
+      success: true,
+      message: "Hospitals Fetched Successfully",
+      data: hospitals,
     });
   } catch (error) {
     return res.send({
