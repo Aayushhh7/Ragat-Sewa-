@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import Navbar from "./../../components/Navbar";
+import Nav from "../../components/Nav";
 import { Form, Input, Radio, Button, message } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { LoginUser } from "../../apicalls/users";
@@ -41,7 +41,7 @@ const Login = () => {
 
   return (
     <div>
-      {/* <Navbar /> */}
+      <Nav />
       <div className='flex justify-center items-center my-12'>
         <Form
           layout='vertical'

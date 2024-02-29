@@ -6,6 +6,8 @@ import { getLoggedInUserName } from "../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { SetCurrentUser } from "../redux/usersSlice";
 import { SetLoading } from "../redux/loadersSlice";
+import Navbar from "../components/Navbar";
+import logo from "../images/logo-ragatsewa.png";
 
 function ProtectedPage({ children }) {
   // Selecting the user state from usersslice
@@ -42,21 +44,25 @@ function ProtectedPage({ children }) {
     currentUser && (
       <div>
         {/* header */}
-        <div className='flex justify-between items-center bg-primary-color text-white px-5 py-1'>
+
+        <div className='flex justify-between items-center px-5 py-3'>
           <div>
-            <h1 className='text-2xl font-medium'>Ragat Sewa</h1>
-            <span className='text-xs '>
-              {currentUser.userType.toUpperCase()}
-            </span>
+            <div className='flex items-center'>
+              <img src={logo} alt='logo' className='w-12' />
+              <h1 className='text-lg font-bold'>Ragat Sewa</h1>
+            </div>
           </div>
           <div className='flex items-center gap-1'>
             <i className='ri-shield-user-fill'></i>
             <div className='flex flex-col'>
               <span
-                className='mr-5 text-md cursor-pointer'
+                className='mr-5 text-md cursor-pointer font-semibold'
                 onClick={() => navigate("/profile")}
               >
                 {getLoggedInUserName(currentUser).toUpperCase()}
+                <span className='text-xs flex '>
+                  {currentUser.userType.toUpperCase()}
+                </span>
               </span>
             </div>
             <i
