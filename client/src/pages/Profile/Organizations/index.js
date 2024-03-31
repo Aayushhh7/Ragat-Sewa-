@@ -21,7 +21,6 @@ function Organizations({ userType }) {
       } else {
         response = await GetAllOrganizationofDonor();
       }
-      console.log("API Response:", response); // Log the response
       dispatch(SetLoading(false));
       if (response.success) {
         setData(response.data);

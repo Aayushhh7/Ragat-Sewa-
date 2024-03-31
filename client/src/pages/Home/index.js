@@ -1,6 +1,11 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { Table } from "antd";
+import { Table, Tabs } from "antd";
+import banner from "../../images/banner.png";
+import donation from "../../images/donation.png";
+import { getLoggedInUserName } from "../../utils/helper";
+
+
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.users);
@@ -30,28 +35,110 @@ const Home = () => {
     },
   ];
 
+  // const onChange = (currentSlide) => {
+  //   console.log(currentSlide);
+  // };
+
   return (
     <div>
-      <div className='flex '>
+      <div className='flex justify-start'>
         {/* Home Page Content */}
         <div className='container mt-2'>
-          <h2 className='text-2xl font-semibold mb-4'>
-            Welcome to Ragat Sewa Blood Bank Management
-          </h2>
-          <div className='flex ml-auto bg-primary-color h-10'>
-            <div className='flex items-center text-white font-bold'>
-              <h1>Compatible Blood Type Donors</h1>
+          <span className='text-2xl font-semibold'>
+            Welcome to {getLoggedInUserName(currentUser)} {currentUser.userType}
+          </span>
+          <div className='flex mt-3 justify-center border-b '>
+            <img src={banner} alt='banner' className='flex w-1/2' />
+          </div>
+          <h1 className='text-center text-primary-color font-medium text-2xl mt-2 '>
+            Events
+          </h1>
+          <div className='flex mt-3 justify-center border-1 h-[20%]'></div>
+          <h1 className='text-center text-primary-color font-medium text-2xl p-2  '>
+            Learn About Blood Donation{" "}
+          </h1>
+          <div className='flex gap-8 border-b p-2'>
+            <img src={donation} className='w-1/2 h-96 mt-8' />
+            <div className='flex flex-col justify-center w-full'>
+              <h1 className='text-white flex items-center justify-center bg-primary-color py-2'>
+                Compatible Blood Type Donors
+              </h1>
+              <Table
+                dataSource={bloodTypeData}
+                columns={columns}
+                pagination={false}
+                className='w-full py-2'
+              />
             </div>
           </div>
-          <div className='flex justify-end'>
-            <Table
-              dataSource={bloodTypeData}
-              columns={columns}
-              pagination={false}
-              className='mt-1'
-            />
+          <h1 className='text-center text-primary-color font-medium text-2xl mt-2 '>
+            Types of Blood Donation
+          </h1>
+          <div className='h-[20%] mt-3'>
+            <p className='text-center leading-loose'>
+              Welcome to <strong>Ragat Sewa</strong>, where every drop counts in
+              saving lives. Whether you're a first-time donor or a regular
+              contributor, understanding the various types of blood donation can
+              help you make an even more significant impact. We offer diverse
+              donation options, each serving specific medical needs. Explore the
+              different ways you can contribute and join us in the noble cause
+              of giving the gift of life.
+              <p className='text-center p-3'>
+                The average human body contains about five liters of blood,
+                which is made of several cellular and non-cellular components
+                such as "<strong>Red Blood Cell</strong>,{" "}
+                <strong>Platelet</strong>, and <strong>Plasma</strong>
+                <p className='text-center p-3'>
+                  Each type of component has its unique properties and can be
+                  used for different indications. The donated blood is separated
+                  into these components by the blood centre and one donated unit
+                  can save upto four lives depending on the number of components
+                  separated from your blood.
+                </p>
+              </p>
+            </p>
+
+            {/* <ul className="text-justify">
+              <li>
+                <strong>Whole Blood Donation:</strong> Give a pint of blood
+                containing red cells, plasma, and platelets. Crucial for various
+                medical treatments and surgeries.
+              </li>
+              <li>
+                <strong>Platelet Donation (Plateletpheresis):</strong> Targeted
+                impact for cancer patients and those in chemotherapy. Advanced
+                technology ensures a direct contribution to those in need.
+              </li>
+              <li>
+                <strong>Plasma Donation (Plasmapheresis):</strong> Contribute
+                the "liquid gold" of blood—plasma. Essential for clotting and
+                protein transport, aiding patients with various medical
+                conditions.
+              </li>
+              <li>
+                <strong>
+                  Double Red Cell Donation (Double Red Cell Apheresis):
+                </strong>{" "}
+                Maximize red blood cell impact by collecting a larger volume
+                while supporting patients with specific medical conditions.
+              </li>
+              <li>
+                <strong>Autologous and Directed Donation:</strong> Personalize
+                your contribution by donating for your future use or supporting
+                a loved one. These options cater to specific medical needs,
+                offering a unique way to make a difference.
+              </li>
+            </ul> */}
           </div>
-          {/* Add more content or components as needed */}
+          <div>
+            <Tabs>
+              <>
+                <Tabs.TabPane tab='Red Blood Cell' key='1'></Tabs.TabPane>
+                <Tabs.TabPane tab='Platelets' key='2'></Tabs.TabPane>
+                <Tabs.TabPane tab='Plasma' key='3'></Tabs.TabPane>
+              </>
+            </Tabs>
+          </div>
         </div>
       </div>
     </div>

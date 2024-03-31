@@ -5,6 +5,7 @@ import Inventory from "./Inventory";
 import Donors from "./Donors";
 import Hospitals from "./Hospitals";
 import Organizations from "./Organizations";
+import Events from "../Events";
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.users);
@@ -13,29 +14,32 @@ function Profile() {
       <Tabs>
         {currentUser.userType === "organization" && (
           <>
-            <Tabs.TabPane tab='Inventory' key='1'>
+            <Tabs.TabPane tab='Events' key='1'>
+              <Events/>
+            </Tabs.TabPane>
+            <Tabs.TabPane tab='Inventory' key='2'>
               <Inventory />
             </Tabs.TabPane>
-            <Tabs.TabPane tab='Donors' key='2'>
+            <Tabs.TabPane tab='Donors' key='3'>
               <Donors />
             </Tabs.TabPane>
-            <Tabs.TabPane tab='Hospitals' key='3'>
+            <Tabs.TabPane tab='Hospital' key='4'>
               <Hospitals />
             </Tabs.TabPane>
           </>
         )}
         {currentUser.userType === "donor" && (
           <>
-            <Tabs.TabPane tab='Blood Donations' key='4'></Tabs.TabPane>
-            <Tabs.TabPane tab='Organizations' key='5'>
+            <Tabs.TabPane tab='Blood Donations' key='5'></Tabs.TabPane>
+            <Tabs.TabPane tab='Organizations' key='6'>
               <Organizations />
             </Tabs.TabPane>
           </>
         )}
         {currentUser.userType === "hospital" && (
           <>
-            <Tabs.TabPane tab='Blood Consumptions' key='6'></Tabs.TabPane>
-            <Tabs.TabPane tab='Organizations' key='7'>
+            <Tabs.TabPane tab='Blood Consumptions' key='7'></Tabs.TabPane>
+            <Tabs.TabPane tab='Organizations' key='8'>
               <Organizations userType='hospital' />
             </Tabs.TabPane>
           </>

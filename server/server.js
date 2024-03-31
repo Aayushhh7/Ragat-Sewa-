@@ -18,10 +18,12 @@ app.use(cors());
 
 const userRoute = require("./routes/userRoute");
 const inventoryRoute = require("./routes/inventoryRoute");
+const eventRoute = require("./routes/eventRoute");
 
 // Routes
 app.use("/api/users", userRoute);
 app.use("/api/inventory", inventoryRoute);
+app.use("/api/events", eventRoute);
 
 // Port
 const PORT = process.env.PORT || 5000;
