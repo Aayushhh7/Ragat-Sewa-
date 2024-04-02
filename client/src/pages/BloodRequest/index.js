@@ -1,85 +1,145 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { Form, Input, DatePicker, TimePicker, Button, message } from "antd";
+import { Form, Input, Button, DatePicker, Select, message } from "antd";
+import { sendBloodDonationRequest } from "../../apicalls/emailBoardcasting";
+import Navbar from "./../../components/Navbar";
+import banner from "../../images/image1.png";
+import banner2 from "../../images/image2.jpg";
+import { getAntdInputValidation } from "../../utils/helper";
 
-function BloodRequest() {
-  const [form] = Form.useForm();
-  const [errors, setErrors] = useState({});
+const { Option } = Select;
+function BloodDonationForm() {
+  const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async () => {
+  const onFinish = async (values) => {
     try {
-      const formData = form.getFieldsValue();
-      const response = await axios.post("/api/send-email", formData);
-      console.log(response.data);
-      message.success("Blood donation request submitted successfully.");
+      setLoading(true);
+      await sendBloodDonationRequest(values);
+      message.success("Blood donation request sent successfully!");
     } catch (error) {
-      console.error("Error:", error);
+      console.error("Error sending blood donation request:", error);
       message.error(
-        "Failed to submit blood donation request. Please try again."
+        "Failed to send blood donation request. Please try again later."
       );
-    }
-  };
-
-  // Basic form validation function
-  const validateForm = async () => {
-    try {
-      await form.validateFields();
-      return true;
-    } catch (error) {
-      const newErrors = {};
-      error.errorFields.forEach((field) => {
-        newErrors[field.name[0]] = field.errors[0];
-      });
-      setErrors(newErrors);
-      return false;
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <Form form={form} layout='vertical' onFinish={handleSubmit}>
-      <Form.Item
-        label='Blood Group'
-        name='bloodGroup'
-        rules={[{ required: true, message: "Blood Group is required" }]}
-      >
-        <Input placeholder='Blood Group' />
-      </Form.Item>
-      {errors.bloodGroup && (
-        <span className='error-message'>{errors.bloodGroup}</span>
-      )}
-      <Form.Item
-        label='Date'
-        name='date'
-        rules={[{ required: true, message: "Date is required" }]}
-      >
-        <DatePicker />
-      </Form.Item>
-      {errors.date && <span className='error-message'>{errors.date}</span>}
-      <Form.Item
-        label='Time'
-        name='time'
-        rules={[{ required: true, message: "Time is required" }]}
-      >
-        <TimePicker />
-      </Form.Item>
-      {errors.time && <span className='error-message'>{errors.time}</span>}
-      <Form.Item
-        label='Location'
-        name='location'
-        rules={[{ required: true, message: "Location is required" }]}
-      >
-        <Input placeholder='Location' />
-      </Form.Item>
-      {errors.location && (
-        <span className='error-message'>{errors.location}</span>
-      )}
-      <Form.Item>
-        <Button type='primary' htmlType='submit'>
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+    <div>
+      <Navbar />
+      <div className='flex mt-3 justify-center'>
+        <img src={banner} alt='banner' className='flex w-[92%] h-56' />
+      </div>
+      <div className='flex mt-2 justify-center'>
+        <img src={banner2} alt='banner' className='flex h-28' />
+      </div>
+      <div className='flex justify-center items-center my-2'>
+        <Form
+          layout='vertical'
+          className='border-1 border-primary-color rounded-sm shadow grid p-4 gap-x-7 gap-y-4 w-1/3'
+          onFinish={onFinish}
+          initialValues={{ date: null, time: null }}
+        >
+          <h1 className=' uppercase text-2xl font-medium '>
+            <span className='text-primary-color '>REQUEST BLOOD</span>
+            <hr />
+          </h1>
+          <Form.Item
+            name='bloodGroup'
+            label='Blood Group'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <Select
+              className='rounded-sm shadow-none'
+              placeholder='Blood Group'
+            >
+              <Option value='A+'>A+</Option>
+              <Option value='A-'>A-</Option>
+              <Option value='B+'>B+</Option>
+              <Option value='B-'>B-</Option>
+              <Option value='AB+'>AB+</Option>
+              <Option value='AB-'>AB-</Option>
+              <Option value='O+'>O+</Option>
+              <Option value='O-'>O-</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name='date'
+            label='Date'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <DatePicker format='YYYY-MM-DD ddd' showToday />
+          </Form.Item>
+          <Form.Item
+            name='time'
+            label='Time'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <Select className='rounded-sm shadow-none' placeholder='Time'>
+              <Option value='00:00'>12:00 AM</Option>
+              <Option value='01:00'>1:00 AM</Option>
+              <Option value='02:00'>2:00 AM</Option>
+              <Option value='03:00'>3:00 AM</Option>
+              <Option value='04:00'>4:00 AM</Option>
+              <Option value='05:00'>5:00 AM</Option>
+              <Option value='06:00'>6:00 AM</Option>
+              <Option value='07:00'>7:00 AM</Option>
+              <Option value='08:00'>8:00 AM</Option>
+              <Option value='09:00'>9:00 AM</Option>
+              <Option value='10:00'>10:00 AM</Option>
+              <Option value='11:00'>11:00 AM</Option>
+              <Option value='12:00'>12:00 PM</Option>
+              <Option value='13:00'>1:00 PM</Option>
+              <Option value='14:00'>2:00 PM</Option>
+              <Option value='15:00'>3:00 PM</Option>
+              <Option value='16:00'>4:00 PM</Option>
+              <Option value='17:00'>5:00 PM</Option>
+              <Option value='18:00'>6:00 PM</Option>
+              <Option value='19:00'>7:00 PM</Option>
+              <Option value='20:00'>8:00 PM</Option>
+              <Option value='21:00'>9:00 PM</Option>
+              <Option value='22:00'>10:00 PM</Option>
+              <Option value='23:00'>11:00 PM</Option>
+            </Select>
+          </Form.Item>
+          <Form.Item
+            name='contactNumber'
+            label='Contact Number'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <Input
+              placeholder='Contact Number'
+              className='rounded-sm shadow-none'
+            />
+          </Form.Item>
+          <Form.Item
+            name='location'
+            label='Location'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <Input placeholder='Location' className='rounded-sm shadow-none' />
+          </Form.Item>
+          <Form.Item>
+            <Button
+              type='primary'
+              htmlType='submit'
+              block
+              className=' rounded bg-primary-color text-white text-base font-medium active:scale-[.98] active:duration-75 transition-all ease-in-out '
+              loading={loading}
+            >
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
+    </div>
   );
 }
 
-export default BloodRequest;
+export default BloodDonationForm;

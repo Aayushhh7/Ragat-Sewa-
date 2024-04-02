@@ -45,7 +45,7 @@ const Home = () => {
         {/* Home Page Content */}
         <div className='container mt-2'>
           <span className='text-2xl font-semibold'>
-            Welcome to {getLoggedInUserName(currentUser)} {currentUser.userType}
+            Welcome {getLoggedInUserName(currentUser)} {currentUser.userType}
           </span>
           <div className='flex mt-3 justify-center border-b '>
             <img src={banner} alt='banner' className='flex w-1/2' />

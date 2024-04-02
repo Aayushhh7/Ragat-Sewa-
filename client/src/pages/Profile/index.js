@@ -15,7 +15,7 @@ function Profile() {
         {currentUser.userType === "organization" && (
           <>
             <Tabs.TabPane tab='Events' key='1'>
-              <Events/>
+              <Events />
             </Tabs.TabPane>
             <Tabs.TabPane tab='Inventory' key='2'>
               <Inventory />

@@ -46,3 +46,6 @@ table {
   border-radius: 3px !important;
 }
 
+.active-link {
+  text-decoration: underline;
+}

@@ -16,7 +16,7 @@ function EventForm({ open, setOpen, reloadData }) {
 
       const formattedValues = {
         ...values,
-        eventDate: values.eventDate.format("YYYY-MM-DD"),
+        eventDate: values.eventDate.format("YYYY-MM-DD ddd"),
         organization: currentUser._id,
       };
 
