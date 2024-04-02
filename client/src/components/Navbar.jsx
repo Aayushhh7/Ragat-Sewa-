@@ -29,6 +29,10 @@ const Navbar = () => {
           About Us
           {activeLink === "/aboutus" && <div className="underline"></div>}
         </Link>
+        <Link to='/donationevents' className={activeLink === "/donationevents" ? 'active-link' : null}>
+          Events
+          {activeLink === "/donationevents" && <div className="underline"></div>}
+        </Link>
         <Link to='/requestblood' className={activeLink === "/requestblood" ? 'active-link' : null}>
           Request Blood
           {activeLink === "/requestblood" && <div className="underline"></div>}

@@ -42,12 +42,14 @@ router.post("/post-event", authMiddleware, async (req, res) => {
 });
 
 // Get events
-router.get("/get-event", authMiddleware, async (req, res) => {
+// Get events
+router.get("/get-event", async (req, res) => {
   try {
-    const events = await Event.find({ organization: req.body.userId }).sort({
-      createdAt: -1,
-    });
-
+    let query = {}; // Default query to fetch all events
+    if (req.body.userId) {
+      query = { organization: req.body.userId }; // Fetch organization-specific events if user is authenticated
+    }
+    const events = await Event.find(query).sort({ createdAt: -1 });
     return res.send({
       success: true,
       message: "Events Fetched Successfully",

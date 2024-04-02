@@ -10,12 +10,13 @@ import BloodRequest from "./pages/BloodRequest";
 import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
 import Profile from "./pages/Profile";
+import Event from "./pages/Event";
 
 function App() {
   const { loading } = useSelector((state) => state.loaders);
   return (
     <div>
-      {loading && <Spinner/>}
+      {loading && <Spinner />}
       <Routes>
         <Route
           path='/'
@@ -37,6 +38,7 @@ function App() {
         <Route path='/requestBlood' element={<BloodRequest />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />
+        <Route path='/donationevents' element={<Event />} />
       </Routes>
     </div>
   );

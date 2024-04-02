@@ -1,8 +1,8 @@
 import { DatePicker, Form, Input, Modal, Select, message } from "antd";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { SetLoading } from "../../redux/loadersSlice";
-import { PostEvent } from "../../apicalls/events";
+import { SetLoading } from "../../../redux/loadersSlice";
+import { PostEvent } from "../../../apicalls/events";
 
 const { Option } = Select;
 function EventForm({ open, setOpen, reloadData }) {
@@ -84,7 +84,7 @@ function EventForm({ open, setOpen, reloadData }) {
           label='Event Date'
           rules={[{ required: true, message: "Please enter event date!" }]}
         >
-          <DatePicker />
+          <DatePicker format='YYYY-MM-DD ddd' showToday />
         </Form.Item>
         <Form.Item
           name='eventTime'
@@ -123,7 +123,7 @@ function EventForm({ open, setOpen, reloadData }) {
           label='Event Description'
           rules={[{ required: true, message: "Please enter Description!" }]}
         >
-          <Input
+          <Input.TextArea
             className='flex h-20 rounded-sm shadow-none'
             placeholder='Event Description'
           />

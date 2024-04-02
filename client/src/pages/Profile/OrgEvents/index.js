@@ -1,8 +1,8 @@
 import { Button, Table, message } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { GetEvent } from "./../../apicalls/events";
-import { SetLoading } from "../../redux/loadersSlice";
+import { GetEvent } from "../../../apicalls/events";
+import { SetLoading } from "../../../redux/loadersSlice";
 import EventForm from "./EventForm";
 import { render } from "@testing-library/react";
 

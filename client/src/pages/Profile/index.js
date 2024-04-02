@@ -5,7 +5,7 @@ import Inventory from "./Inventory";
 import Donors from "./Donors";
 import Hospitals from "./Hospitals";
 import Organizations from "./Organizations";
-import Events from "../Events";
+import Events from "./OrgEvents";
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.users);
