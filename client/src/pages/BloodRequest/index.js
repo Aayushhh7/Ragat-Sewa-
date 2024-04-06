@@ -118,6 +118,14 @@ function BloodDonationForm() {
             />
           </Form.Item>
           <Form.Item
+            name='requestEmail'
+            label='Email'
+            className='font-semibold'
+            rules={getAntdInputValidation()}
+          >
+            <Input placeholder='Email' className='rounded-sm shadow-none' />
+          </Form.Item>
+          <Form.Item
             name='location'
             label='Location'
             className='font-semibold'

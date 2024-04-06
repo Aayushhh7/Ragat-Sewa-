@@ -15,17 +15,23 @@ const bloodDonationRequestSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  conatactNumber:{
+  conatactNumber: {
     type: String,
-    required: true,    
+    required: true,
   },
   location: {
     type: String,
     required: true,
   },
-  
+  requestEmail: {
+    type: String,
+    required: true,
+  },
 });
 
-const BloodDonationRequest = mongoose.model("BloodDonationRequest", bloodDonationRequestSchema);
+const BloodDonationRequest = mongoose.model(
+  "BloodDonationRequest",
+  bloodDonationRequestSchema
+);
 
 module.exports = BloodDonationRequest;

@@ -15,7 +15,7 @@ router.post("/post-event", authMiddleware, async (req, res) => {
       description,
     } = req.body;
 
-    // Get the user ID from the authenticated user using req.body.userId
+    // Get the user ID from the authenticated user using req.user.userId
     const organization = req.body.userId;
 
     // Create a new event instance
@@ -41,15 +41,27 @@ router.post("/post-event", authMiddleware, async (req, res) => {
   }
 });
 
-// Get events
-// Get events
+// Get all events
 router.get("/get-event", async (req, res) => {
   try {
-    let query = {}; // Default query to fetch all events
-    if (req.body.userId) {
-      query = { organization: req.body.userId }; // Fetch organization-specific events if user is authenticated
-    }
-    const events = await Event.find(query).sort({ createdAt: -1 });
+    const events = await Event.find().sort({ createdAt: -1 });
+    return res.send({
+      success: true,
+      message: "Events Fetched Successfully",
+      data: events,
+    });
+  } catch (error) {
+    return res.send({ success: false, message: error.message });
+  }
+});
+
+// Get events posted by organization
+router.get("/get-events-by-organization", authMiddleware, async (req, res) => {
+  try {
+    // Fetch events posted by the authenticated organization
+    const events = await Event.find({ organization: req.body.userId }).sort({
+      createdAt: -1,
+    });
     return res.send({
       success: true,
       message: "Events Fetched Successfully",

@@ -1,7 +1,7 @@
 import { Button, Table, message } from "antd";
 import React from "react";
 import { useDispatch } from "react-redux";
-import { GetEvent } from "../../../apicalls/events";
+import { GetEventsByOrganization } from "../../../apicalls/events";
 import { SetLoading } from "../../../redux/loadersSlice";
 import EventForm from "./EventForm";
 import { render } from "@testing-library/react";
@@ -53,7 +53,7 @@ function Event() {
   const getData = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await GetEvent();
+      const response = await GetEventsByOrganization();
       console.log(response); // Log the entire response object
       dispatch(SetLoading(false));
       if (response.success) {

@@ -58,6 +58,12 @@ const eventSchema = new mongoose.Schema({
     ref: "organizations",
     required: [true, "Organization is required"],
   },
+  volunteers: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "volunteers",
+    },
+  ],
 });
 
 const Event = mongoose.model("Events", eventSchema);

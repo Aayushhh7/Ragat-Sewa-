@@ -3,9 +3,9 @@ import { useSelector } from "react-redux";
 import { Table, Tabs } from "antd";
 import banner from "../../images/banner.png";
 import donation from "../../images/donation.png";
+import upcommingeventsIMG from "../../images/View Upcomming Events.png";
 import { getLoggedInUserName } from "../../utils/helper";
-
-
+import Navbar from "./../../components/Navbar";
 
 const Home = () => {
   const { currentUser } = useSelector((state) => state.users);
@@ -41,11 +41,14 @@ const Home = () => {
 
   return (
     <div>
+      {/* <Navbar /> */}
       <div className='flex justify-start'>
         {/* Home Page Content */}
         <div className='container mt-2'>
           <span className='text-2xl font-semibold'>
-            Welcome {getLoggedInUserName(currentUser)} {currentUser.userType}
+            {/* Welcome
+            {/* {getLoggedInUserName(currentUser)}  */}
+            {/* {currentUser.userType} */}
           </span>
           <div className='flex mt-3 justify-center border-b '>
             <img src={banner} alt='banner' className='flex w-1/2' />
@@ -53,7 +56,9 @@ const Home = () => {
           <h1 className='text-center text-primary-color font-medium text-2xl mt-2 '>
             Events
           </h1>
-          <div className='flex mt-3 justify-center border-1 h-[20%]'></div>
+          <div className='flex mt-3 justify-center border-1 h-[20%]'>
+            <img src={upcommingeventsIMG} alt='' className='flex w-[100%]' />
+          </div>
           <h1 className='text-center text-primary-color font-medium text-2xl p-2  '>
             Learn About Blood Donation{" "}
           </h1>

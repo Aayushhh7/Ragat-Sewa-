@@ -10,7 +10,7 @@ export const sendBloodDonationRequest = async (requestData) => {
 
 export const getBloodDonationRequest = async () => {
   return axiosInstance(
-    "post",
+    "get",
     "/api/emailBoardcasting/blood-donation-requests",
     requestData
   );
