@@ -19,11 +19,11 @@ const inventorySchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: true,
+      unique: false,
     },
     organization: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "organizations",
+      ref: "users",
       required: [true, "Organization is required"],
     },
 
