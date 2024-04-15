@@ -4,10 +4,10 @@ const Volunteer = require("../models/volunteerModel");
 // POST: Create a new volunteer registration
 router.post("/register-volunteers", async (req, res) => {
   try {
-    const { name, email, phone, eventId } = req.body;
+    const { title, name, email, phone, eventId } = req.body;
 
     // Create a new volunteer registration
-    const volunteer = new Volunteer({ name, email, phone, eventId });
+    const volunteer = new Volunteer({ title, name, email, phone, eventId });
     await volunteer.save();
 
     res.status(201).json({

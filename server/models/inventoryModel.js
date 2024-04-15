@@ -14,12 +14,11 @@ const inventorySchema = new mongoose.Schema(
     },
     quantityofBlood: {
       type: Number,
-      require: [true, "Blood Quanity is required"],
+      required: [true, "Blood Quanity is required"],
     },
     email: {
       type: String,
       required: [true, "Email is required"],
-      unique: false,
     },
     organization: {
       type: mongoose.Schema.Types.ObjectId,

@@ -106,6 +106,7 @@ router.get("/get", authMiddleware, async (req, res) => {
 router.post("/filter", authMiddleware, async (req, res) => {
   try {
     const inventory = await Inventory.find(req.body.filters)
+      .limit(req.body.limit || 10)
       .sort({ createdAt: -1 })
       .populate("donor")
       .populate("hospital")
@@ -119,5 +120,45 @@ router.post("/filter", authMiddleware, async (req, res) => {
     return res.send({ success: false, message: error.message });
   }
 });
+
+// Delete inventory by ID
+router.delete("/delete/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
+      throw new Error("Inventory not found");
+    }
+
+    await inventory.deleteOne(); // Use deleteOne() method instead of delete()
+    return res.send({
+      success: true,
+      message: "Inventory deleted successfully",
+    });
+  } catch (error) {
+    return res.send({ success: false, message: error.message });
+  }
+});
+
+router.put("/update/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
+      throw new Error("Inventory not found");
+    }
+
+    // Update inventory fields
+    Object.keys(req.body).forEach((key) => {
+      inventory[key] = req.body[key];
+    });
+
+    await inventory.save();
+    return res.send({ success: true, message: "Inventory updated successfully" });
+  } catch (error) {
+    return res.send({ success: false, message: error.message });
+  }
+});
+
 
 module.exports = router;

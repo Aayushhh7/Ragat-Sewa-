@@ -21,7 +21,9 @@ function BloodDonationEvents() {
       const response = await GetEvent();
       if (response.success) {
         const sortedData = response.data.sort((a, b) =>
-          moment(a.eventDate, "YYYY-MM-DD").diff(moment(b.eventDate, "YYYY-MM-DD"))
+          moment(a.eventDate, "YYYY-MM-DD").diff(
+            moment(b.eventDate, "YYYY-MM-DD")
+          )
         );
         setData(sortedData);
       } else {
@@ -187,6 +189,7 @@ function BloodDonationEvents() {
         >
           {showVolunteerForm && (
             <VolunteerRegistrationForm
+              title={selectedEvent?.eventName}
               eventId={selectedEvent ? selectedEvent._id : null}
               closeModal={closeModal}
             />

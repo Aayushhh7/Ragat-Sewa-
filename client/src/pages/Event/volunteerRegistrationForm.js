@@ -4,10 +4,10 @@ import { createVolunteerRegistration } from "../../apicalls/volunteers";
 import { SetLoading } from "../../redux/loadersSlice";
 import { useDispatch } from "react-redux";
 
-function VolunteerRegistrationForm({ eventId, closeModal }) {
+function VolunteerRegistrationForm({ title, eventId, closeModal }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-
+console.log(title)
   const onFinish = async (values) => {
     try {
       dispatch(SetLoading(true)); // Dispatch the action to set loading to true
@@ -15,6 +15,7 @@ function VolunteerRegistrationForm({ eventId, closeModal }) {
       const response = await createVolunteerRegistration({
         ...values,
         eventId: eventId,
+        title: title,
       });
       dispatch(SetLoading(false)); // Dispatch the action to set loading to false
       if (response.success) {

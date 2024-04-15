@@ -40,7 +40,7 @@ function EventVolunteers() {
     },
     {
       title: "Event Name",
-      dataIndex: "eventName",
+      dataIndex: "title",
     },
     {
       title: "Registered At",
@@ -55,7 +55,6 @@ function EventVolunteers() {
 
   return (
     <div>
-      <h1>Event Volunteers</h1>
       <Table columns={columns} dataSource={data} className='mt-3' />
     </div>
   );

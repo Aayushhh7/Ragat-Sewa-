@@ -21,6 +21,7 @@ const inventoryRoute = require("./routes/inventoryRoute");
 const eventRoute = require("./routes/eventRoute");
 const bloodDonationRequestRoutes = require("./routes/bloodDonationRequestRoutes");
 const volunteerRoutes = require("./routes/volunteerRoutes");
+const dashboardRoute = require("./routes/dashboardRoute");
 
 // Routes
 app.use("/api/users", userRoute);
@@ -28,6 +29,7 @@ app.use("/api/inventory", inventoryRoute);
 app.use("/api/events", eventRoute);
 app.use("/api/emailBoardcasting", bloodDonationRequestRoutes);
 app.use("/api/volunteers", volunteerRoutes);
+app.use("/api/dashboard", dashboardRoute);
 
 // Port
 const PORT = process.env.PORT || 5000;

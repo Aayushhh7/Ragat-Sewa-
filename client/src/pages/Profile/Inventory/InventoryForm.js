@@ -7,7 +7,7 @@ import { AddInventory } from "../../../apicalls/inventory";
 
 const { Option } = Select;
 
-function InventoryForm({ open, setOpen, reloadData }) {
+function InventoryForm({ open, setOpen, selectedProduct, reloadData }) {
   const { currentUser } = useSelector((state) => state.users);
   const [form] = Form.useForm();
   const [inventoryType, setInventoryType] = useState("in");
@@ -16,11 +16,17 @@ function InventoryForm({ open, setOpen, reloadData }) {
   const onFinish = async (values) => {
     try {
       dispatch(SetLoading(true));
-      const response = await AddInventory({
-        ...values,
-        inventoryType,
-        organization: currentUser._id,
-      });
+      let response = null;
+      if (selectedProduct) {
+        response = await EditProduct(selectedProduct._id, values);
+      } else {
+        response = await AddInventory({
+          ...values,
+          inventoryType,
+          organization: currentUser._id,
+        });
+      }
+
       dispatch(SetLoading(false));
       if (response.success) {
         reloadData();

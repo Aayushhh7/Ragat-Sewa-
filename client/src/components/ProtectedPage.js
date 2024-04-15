@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { message } from "antd";
 import { GetCurrentUser } from "../apicalls/users";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link, useLocation } from "react-router-dom";
 import { getLoggedInUserName } from "../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { SetCurrentUser } from "../redux/usersSlice";
@@ -14,6 +14,8 @@ function ProtectedPage({ children }) {
   const { currentUser } = useSelector((state) => state.users);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [activeLink, setActiveLink] = useState(null);
+  const location = useLocation();
 
   const getCurrentUser = async () => {
     try {
@@ -38,40 +40,75 @@ function ProtectedPage({ children }) {
     } else {
       navigate("/login");
     }
-  }, []);
+    const { pathname } = location;
+    // Set active link based on the current pathname
+    setActiveLink(pathname);
+  }, [location]);
 
   return (
     currentUser && (
       <div>
         {/* header */}
-
-        <div className='flex justify-between items-center px-5 py-3'>
-          <div>
-            <div className='flex items-center'>
+        <div className='flex items-center justify-between my-3 mx-12'>
+          <div className='flex items-center'>
+            <Link to='/' className='flex items-center'>
               <img src={logo} alt='logo' className='w-12' />
               <h1 className='text-lg font-bold'>Ragat Sewa</h1>
-            </div>
+            </Link>
           </div>
-          <div className='flex items-center gap-1'>
-            <i className='ri-shield-user-fill'></i>
-            <div className='flex flex-col'>
-              <span
-                className='mr-5 text-md cursor-pointer font-semibold'
-                onClick={() => navigate("/profile")}
-              >
-                {getLoggedInUserName(currentUser).toUpperCase()}
-                <span className='text-xs flex '>
-                  {currentUser.userType.toUpperCase()}
+          <div className='flex gap-12 items-center'>
+            <Link to='/' className={activeLink === "/" ? "active-link" : null}>
+              Home
+              {activeLink === "/" && <div className='underline'></div>}
+            </Link>
+            <Link
+              to='/aboutus'
+              className={activeLink === "/aboutus" ? "active-link" : null}
+            >
+              About Us
+              {activeLink === "/aboutus" && <div className='underline'></div>}
+            </Link>
+            <Link
+              to='/donationevents'
+              className={
+                activeLink === "/donationevents" ? "active-link" : null
+              }
+            >
+              Events
+              {activeLink === "/donationevents" && (
+                <div className='underline'></div>
+              )}
+            </Link>
+            <Link
+              to='/requestblood'
+              className={activeLink === "/requestblood" ? "active-link" : null}
+            >
+              Request Blood
+              {activeLink === "/requestblood" && (
+                <div className='underline'></div>
+              )}
+            </Link>
+            <div className='flex items-center gap-1'>
+              <i className='ri-shield-user-fill'></i>
+              <div className='flex flex-col'>
+                <span
+                  className='mr-5 text-md cursor-pointer font-semibold'
+                  onClick={() => navigate("/profile")}
+                >
+                  {getLoggedInUserName(currentUser).toUpperCase()}
+                  <span className='text-xs flex '>
+                    {currentUser.userType.toUpperCase()}
+                  </span>
                 </span>
-              </span>
+              </div>
+              <i
+                className='ri-logout-box-r-line ml-5 cursor-pointer'
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  navigate("/login");
+                }}
+              ></i>
             </div>
-            <i
-              className='ri-logout-box-r-line ml-5 cursor-pointer'
-              onClick={() => {
-                localStorage.removeItem("token");
-                navigate("/login");
-              }}
-            ></i>
           </div>
         </div>
         {/* body */}

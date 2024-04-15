@@ -5,7 +5,7 @@ import { GetInventorywithFilters } from "../apicalls/inventory";
 import { getDateformat } from "../utils/helper";
 import { SetLoading } from "../redux/loadersSlice";
 
-function InventoryTable({ filters, userType }) {
+function InventoryTable({ filters, userType, limit }) {
   const [data, setData] = React.useState([]);
   const dispatch = useDispatch();
 
@@ -28,7 +28,15 @@ function InventoryTable({ filters, userType }) {
     {
       title: "Reference",
       dataIndex: "reference",
-      render: (text, record) => record.organization?.organizationName,
+      render: (text, record) => {
+        if (userType === "organization") {
+          return record.inventoryType === "in"
+            ? record.donor?.name
+            : record.hospital?.hospitalName;
+        } else {
+          return record.organization.organizationName;
+        }
+      },
     },
     {
       title: "Date",
@@ -37,10 +45,22 @@ function InventoryTable({ filters, userType }) {
     },
   ];
 
+  // change columns for hospital or donor
+  if (userType !== "organization") {
+    // remove inventory type column
+    columns.splice(0, 1);
+
+    // change reference column to organization name
+    columns[2].title = "Organization Name";
+
+    // date column should be renamed taken date
+    columns[3].title = userType === "hospital" ? "Taken Date" : "Donated Date";
+  }
+
   const getData = async () => {
     try {
       dispatch(SetLoading(true));
-      const response = await GetInventorywithFilters(filters);
+      const response = await GetInventorywithFilters(filters, limit);
       dispatch(SetLoading(false));
       if (response.success) {
         setData(response.data);
