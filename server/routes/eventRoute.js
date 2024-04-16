@@ -42,7 +42,7 @@ router.post("/post-event", authMiddleware, async (req, res) => {
 });
 
 // Get all events
-router.get("/get-event", async (req, res) => {
+router.get("/get-event", authMiddleware, async (req, res) => {
   try {
     const events = await Event.find().sort({ createdAt: -1 });
     return res.send({

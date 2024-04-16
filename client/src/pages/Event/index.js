@@ -3,7 +3,6 @@ import { Card, Col, Row, message, Modal, Button, Dropdown, Menu } from "antd";
 import { useDispatch } from "react-redux";
 import { GetEvent } from "../../apicalls/events";
 import { SetLoading } from "../../redux/loadersSlice";
-import Navbar from "../../components/Navbar";
 import moment from "moment";
 import VolunteerRegistrationForm from "../Event/volunteerRegistrationForm";
 import { ShareAltOutlined } from "@ant-design/icons";
@@ -104,7 +103,6 @@ function BloodDonationEvents() {
 
   return (
     <div>
-      <Navbar />
       <div className='my-4 mx-12'>
         <h1 className='text-4xl font-bold text-center mb-8 text-primary-color'>
           Upcoming Blood Donation Events

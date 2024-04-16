@@ -41,8 +41,8 @@ const Home = () => {
 
   return (
     <div>
-      {/* <Navbar /> */}
-      <div className='flex justify-start'>
+      <Navbar />
+      <div className='flex justify-start my-3 mx-12'>
         {/* Home Page Content */}
         <div className='container mt-2'>
           <span className='text-2xl font-semibold'>
@@ -103,7 +103,7 @@ const Home = () => {
               </p>
             </p>
 
-            {/* <ul className="text-justify">
+            <ul className="text-justify">
               <li>
                 <strong>Whole Blood Donation:</strong> Give a pint of blood
                 containing red cells, plasma, and platelets. Crucial for various
@@ -133,9 +133,9 @@ const Home = () => {
                 a loved one. These options cater to specific medical needs,
                 offering a unique way to make a difference.
               </li>
-            </ul> */}
+            </ul>
           </div>
-          <div>
+          {/* <div>
             <Tabs>
               <>
                 <Tabs.TabPane tab='Red Blood Cell' key='1'></Tabs.TabPane>
@@ -143,7 +143,7 @@ const Home = () => {
                 <Tabs.TabPane tab='Plasma' key='3'></Tabs.TabPane>
               </>
             </Tabs>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -6,7 +6,6 @@ import { getLoggedInUserName } from "../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { SetCurrentUser } from "../redux/usersSlice";
 import { SetLoading } from "../redux/loadersSlice";
-import Navbar from "../components/Navbar";
 import logo from "../images/logo-ragatsewa.png";
 
 function ProtectedPage({ children }) {
@@ -57,9 +56,9 @@ function ProtectedPage({ children }) {
             </Link>
           </div>
           <div className='flex gap-12 items-center'>
-            <Link to='/' className={activeLink === "/" ? "active-link" : null}>
+            <Link to='/index' className={activeLink === "/" ? "active-link" : null}>
               Home
-              {activeLink === "/" && <div className='underline'></div>}
+              {activeLink === "/home" && <div className='underline'></div>}
             </Link>
             <Link
               to='/aboutus'

@@ -27,7 +27,6 @@ function BloodDonationForm() {
 
   return (
     <div>
-      <Navbar />
       <div className='flex mt-3 justify-center'>
         <img src={banner} alt='banner' className='flex w-[92%] h-56' />
       </div>

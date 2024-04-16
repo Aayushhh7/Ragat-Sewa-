@@ -3,9 +3,10 @@ const router = express.Router();
 const nodemailer = require("nodemailer");
 const moment = require("moment");
 const User = require("../models/userModel");
+const authMiddleware = require("../middlewares/authMiddleware");
 
 // Route to send blood donation request emails
-router.post("/send-email", async (req, res) => {
+router.post("/send-email",  authMiddleware, async (req, res) => {
   try {
     const { bloodGroup, date, time, contactNumber, location } =
       req.body;
