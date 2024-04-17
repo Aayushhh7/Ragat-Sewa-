@@ -16,16 +16,12 @@ function InventoryForm({ open, setOpen, selectedProduct, reloadData }) {
   const onFinish = async (values) => {
     try {
       dispatch(SetLoading(true));
-      let response = null;
-      if (selectedProduct) {
-        response = await EditProduct(selectedProduct._id, values);
-      } else {
-        response = await AddInventory({
-          ...values,
-          inventoryType,
-          organization: currentUser._id,
-        });
-      }
+
+      const response = await AddInventory({
+        ...values,
+        inventoryType,
+        organization: currentUser._id,
+      });
 
       dispatch(SetLoading(false));
       if (response.success) {

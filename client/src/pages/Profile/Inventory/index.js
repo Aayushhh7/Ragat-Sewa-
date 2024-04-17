@@ -14,7 +14,6 @@ function Inventory() {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [initialValues, setInitialValues] = useState(null); // Define initialValues state variable
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
   const dispatch = useDispatch();
 
   const columns = [

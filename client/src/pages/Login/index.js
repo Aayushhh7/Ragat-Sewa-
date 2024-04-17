@@ -23,7 +23,7 @@ const Login = () => {
       if (response.success) {
         message.success(response.message);
         localStorage.setItem("token", response.data);
-        navigate("/");
+        navigate("/index");
       } else {
         throw new Error(response.message);
       }
@@ -35,7 +35,7 @@ const Login = () => {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      navigate("/");
+      navigate("/index");
     }
   }, []);
 

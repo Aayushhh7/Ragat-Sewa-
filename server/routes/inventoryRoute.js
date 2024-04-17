@@ -94,7 +94,6 @@ router.get("/get", authMiddleware, async (req, res) => {
       .populate("hospital");
     return res.send({
       success: true,
-      message: "Inventory Fetched Successfully",
       data: inventory,
     });
   } catch (error) {
@@ -102,7 +101,7 @@ router.get("/get", authMiddleware, async (req, res) => {
   }
 });
 
-//get inventory with filte
+//get inventory with filter
 router.post("/filter", authMiddleware, async (req, res) => {
   try {
     const inventory = await Inventory.find(req.body.filters)
@@ -113,7 +112,6 @@ router.post("/filter", authMiddleware, async (req, res) => {
       .populate("organization");
     return res.send({
       success: true,
-      message: "Inventory Fetched Successfully",
       data: inventory,
     });
   } catch (error) {

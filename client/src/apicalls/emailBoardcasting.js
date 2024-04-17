@@ -8,10 +8,10 @@ export const sendBloodDonationRequest = async (requestData) => {
   );
 };
 
-export const getBloodDonationRequest = async () => {
-  return axiosInstance(
-    "get",
-    "/api/emailBoardcasting/blood-donation-requests",
-    requestData
-  );
-};
+// export const getBloodDonationRequest = async () => {
+//   return axiosInstance(
+//     "get",
+//     "/api/emailBoardcasting/blood-donation-requests",
+//     requestData
+//   );
+// };

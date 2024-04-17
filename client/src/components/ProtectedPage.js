@@ -50,22 +50,15 @@ function ProtectedPage({ children }) {
         {/* header */}
         <div className='flex items-center justify-between my-3 mx-12'>
           <div className='flex items-center'>
-            <Link to='/' className='flex items-center'>
+            <Link to='/index' className='flex items-center'>
               <img src={logo} alt='logo' className='w-12' />
               <h1 className='text-lg font-bold'>Ragat Sewa</h1>
             </Link>
           </div>
           <div className='flex gap-12 items-center'>
-            <Link to='/index' className={activeLink === "/" ? "active-link" : null}>
+            <Link to='/index' className={activeLink === "/index" ? "active-link" : null}>
               Home
-              {activeLink === "/home" && <div className='underline'></div>}
-            </Link>
-            <Link
-              to='/aboutus'
-              className={activeLink === "/aboutus" ? "active-link" : null}
-            >
-              About Us
-              {activeLink === "/aboutus" && <div className='underline'></div>}
+              {activeLink === "/index" && <div className='underline'></div>}
             </Link>
             <Link
               to='/donationevents'

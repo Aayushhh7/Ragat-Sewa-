@@ -7,7 +7,7 @@ import { useDispatch } from "react-redux";
 function VolunteerRegistrationForm({ title, eventId, closeModal }) {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
-console.log(title)
+  console.log(title);
   const onFinish = async (values) => {
     try {
       dispatch(SetLoading(true)); // Dispatch the action to set loading to true

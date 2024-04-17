@@ -1,8 +1,9 @@
 const router = require("express").Router();
+const authMiddleware = require("../middlewares/authMiddleware");
 const Volunteer = require("../models/volunteerModel");
 
 // POST: Create a new volunteer registration
-router.post("/register-volunteers", async (req, res) => {
+router.post("/register-volunteers", authMiddleware, async (req, res) => {
   try {
     const { title, name, email, phone, eventId } = req.body;
 

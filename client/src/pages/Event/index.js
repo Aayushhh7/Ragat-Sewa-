@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { GetEvent } from "../../apicalls/events";
 import { SetLoading } from "../../redux/loadersSlice";
 import moment from "moment";
-import VolunteerRegistrationForm from "../Event/volunteerRegistrationForm";
+import VolunteerRegistrationForm from "./volunteerRegistrationForm";
 import { ShareAltOutlined } from "@ant-design/icons";
 
 function BloodDonationEvents() {
@@ -103,7 +103,7 @@ function BloodDonationEvents() {
 
   return (
     <div>
-      <div className='my-4 mx-12'>
+      <div className='my-4'>
         <h1 className='text-4xl font-bold text-center mb-8 text-primary-color'>
           Upcoming Blood Donation Events
         </h1>
@@ -122,9 +122,6 @@ function BloodDonationEvents() {
                 }
                 onClick={() => handleShareClick(event)}
               >
-                <p>
-                  <strong>Organization:</strong> {event.organization}
-                </p>
                 <p>
                   <strong>Date:</strong> {event.eventDate}
                 </p>

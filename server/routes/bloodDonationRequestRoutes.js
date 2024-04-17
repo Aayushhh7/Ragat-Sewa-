@@ -4,14 +4,24 @@ const nodemailer = require("nodemailer");
 const moment = require("moment");
 const User = require("../models/userModel");
 const authMiddleware = require("../middlewares/authMiddleware");
+const BloodDonationRequest = require("../models/bloodDonationRequestModel");
 
 // Route to send blood donation request emails
-router.post("/send-email",  authMiddleware, async (req, res) => {
+router.post("/send-email", authMiddleware, async (req, res) => {
   try {
-    const { bloodGroup, date, time, contactNumber, location } =
+    const { bloodGroup, date, contactNumber, location, requestEmail } =
       req.body;
     const formattedDate = moment(date).format("dddd, MMMM Do YYYY");
 
+    // Save the blood donation request to the database
+    const bloodDonationRequest = new BloodDonationRequest({
+      bloodGroup,
+      date,
+      contactNumber,
+      location,
+      requestEmail, // Use the provided requestor's email
+    });
+    await bloodDonationRequest.save();
     // Retrieve registered donors with the same blood group
     const donors = await User.find({ userType: "donor", bloodGroup });
 
@@ -34,7 +44,7 @@ router.post("/send-email",  authMiddleware, async (req, res) => {
           <body>
             <p>Dear <strong>${donor.name}</strong> Donor,</p>
             <p>There is an urgent blood donation request for <strong>${bloodGroup}</strong> blood type.</p>
-            <p>The blood donation is needed on <strong>${formattedDate}, ${time}</strong> at <strong>${location}</strong>.</p>
+            <p>The blood donation is needed on <strong>${formattedDate},</strong> at <strong>${location}</strong>.</p>
             <p>If you are interested, please reply to this email or click <a href="mailto:ragatsewa@gmail.com?subject=Interest in Blood Donation Request&body=I am interested in the blood donation request on ${formattedDate}, at ${location}.">here</a> to express your interest.</p
             <p>Contact Number: <strong>${contactNumber}</strong></p> 
             <p><strong>Note: Contact only if you are interested</strong>.</p>
@@ -61,7 +71,7 @@ router.post("/send-email",  authMiddleware, async (req, res) => {
           <body>
             <p>Dear <strong>${organization.organizationName}</strong> Organization,</p>
             <p>There is an urgent blood donation request for <strong>${bloodGroup}</strong> blood type.</p>
-            <p>The blood donation is needed on <strong>${formattedDate}, ${time}</strong> at <strong>${location}</strong>.</p>
+            <p>The blood donation is needed on <strong>${formattedDate},</strong> at <strong>${location}</strong>.</p>
             <p>Contact Number: <strong>${contactNumber}</strong> </p>
             <p>Your support is appreciated.</p>
             <p>Best Regards,<br><strong>Ragat Sewa</strong></p>
