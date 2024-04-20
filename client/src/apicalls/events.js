@@ -20,5 +20,10 @@ export const GetEventsByOrganization = async (organizationId) => {
   }
 };
 
+export const DeleteEvent = (id) => {
+  return axiosInstance("delete", `/api/events/delete/${id}`);
+};
 
-
+export const UpdateEvent = (id, data) => {
+  return axiosInstance("put", `/api/events/update/${id}`, data);
+};

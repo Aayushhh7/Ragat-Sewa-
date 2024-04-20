@@ -72,4 +72,44 @@ router.get("/get-events-by-organization", authMiddleware, async (req, res) => {
   }
 });
 
+// Delete event by ID
+router.delete("/delete/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    await event.deleteOne(); // Use deleteOne() method instead of delete()
+    return res.send({
+      success: true,
+      message: "Event deleted successfully",
+    });
+  } catch (error) {
+    return res.send({ success: false, message: error.message });
+  }
+});
+
+//Update Event by ID
+router.put("/update/:id", authMiddleware, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const event = await Event.findById(id);
+    if (!event) {
+      throw new Error("Event not found");
+    }
+
+    // Update inventory fields
+    Object.keys(req.body).forEach((key) => {
+      event[key] = req.body[key];
+    });
+
+    await event.save();
+    return res.send({ success: true, message: "Event updated successfully" });
+  } catch (error) {
+    return res.send({ success: false, message: error.message });
+  }
+});
+
 module.exports = router;

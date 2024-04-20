@@ -1,31 +1,55 @@
-import { DatePicker, Form, Input, Modal, Select, message } from "antd";
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { Modal, Form, Button, message, Select, Input } from "antd";
+import { useDispatch } from "react-redux";
 import { SetLoading } from "../../../redux/loadersSlice";
-import { PostEvent } from "../../../apicalls/events";
+import { PostEvent, UpdateEvent } from "../../../apicalls/events";
+import { getAntdInputValidation } from "../../../utils/helper";
+import dayjs from "dayjs";
 
-const { Option } = Select;
-function EventForm({ open, setOpen, reloadData }) {
+function EventForm({ open, setOpen, initialValues, reloadData }) {
   const [form] = Form.useForm();
+  const [eventTime, setEventTime] = useState(null);
   const dispatch = useDispatch();
-  const { currentUser } = useSelector((state) => state.users);
+
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+      setEventTime(initialValues.eventTime);
+    }
+  }, [initialValues]);
 
   const onFinish = async (values) => {
     try {
       dispatch(SetLoading(true));
 
+      let formattedDate = null;
+      if (values.eventDate) {
+        // Parse the date using dayjs and check if it's a valid date
+        const parsedDate = dayjs(values.eventDate, "YYYY-MM-DD ddd", true);
+        if (parsedDate.isValid()) {
+          // If the date is valid, format it as desired
+          formattedDate = parsedDate.format("YYYY-MM-DD ddd");
+        } else {
+          // If the date is invalid, throw an error
+          throw new Error("Invalid event date");
+        }
+      }
+
       const formattedValues = {
         ...values,
-        eventDate: values.eventDate.format("YYYY-MM-DD ddd"),
-        organization: currentUser._id,
+        eventDate: formattedDate,
+        eventTime,
       };
 
-      const response = await PostEvent(formattedValues);
+      const response = initialValues
+        ? await UpdateEvent(initialValues._id, formattedValues)
+        : await PostEvent(formattedValues);
 
       dispatch(SetLoading(false));
+
       if (response.success) {
+        message.success(response.message);
         reloadData();
-        message.success("Event Posted Successfully");
         setOpen(false);
       } else {
         throw new Error(response.message);
@@ -38,95 +62,86 @@ function EventForm({ open, setOpen, reloadData }) {
 
   return (
     <Modal
-      title='POST EVENT'
-      open={open}
+      title={initialValues ? "EDIT EVENT" : "ADD EVENT"}
+      visible={open}
       onCancel={() => setOpen(false)}
-      onOk={() => {
-        form.submit();
-      }}
-      centered
-      okButtonProps={{ style: { backgroundColor: "#6a0b37" } }}
+      footer={[
+        <Button key='cancel' onClick={() => setOpen(false)}>
+          Cancel
+        </Button>,
+        <Button key='submit' type='primary' onClick={() => form.submit()}>
+          Submit
+        </Button>,
+      ]}
     >
       <Form
         layout='vertical'
-        className='flex flex-col gap-2'
+        className='flex flex-col gap-3'
         form={form}
         onFinish={onFinish}
       >
         <Form.Item
           name='eventName'
           label='Event Name'
-          rules={[{ required: true, message: "Please enter event name!" }]}
+          rules={getAntdInputValidation()}
         >
-          <Input placeholder='Event Name' className='rounded-sm shadow-none' />
+          <Input placeholder='Event Name' />
         </Form.Item>
 
         <Form.Item
           name='eventVenue'
           label='Event Venue'
-          rules={[{ required: true, message: "Please enter event venue!" }]}
+          rules={getAntdInputValidation()}
         >
-          <Input placeholder='Event Venue' className='rounded-sm shadow-none' />
+          <Input placeholder='Event Venue' />
         </Form.Item>
+
         <Form.Item
           name='contact'
           label='Contact Number'
-          rules={[{ required: true, message: "Please enter event venue!" }]}
+          rules={getAntdInputValidation()}
         >
-          <Input
-            placeholder='Contact Number'
-            className='rounded-sm shadow-none'
-          />
+          <Input placeholder='Contact Number' />
         </Form.Item>
 
         <Form.Item
           name='eventDate'
           label='Event Date'
-          rules={[{ required: true, message: "Please enter event date!" }]}
+          rules={[
+            {
+              validator: (_, value) => {
+                if (!value) {
+                  return Promise.resolve(); // Allow empty value
+                }
+                // Validate the date format using dayjs
+                const parsedDate = dayjs(value, "YYYY-MM-DD ddd", true);
+                if (parsedDate.isValid()) {
+                  return Promise.resolve(); // Valid date
+                }
+                return Promise.reject("Invalid date format (YYYY-MM-DD ddd)");
+              },
+            },
+          ]}
         >
-          <DatePicker format='YYYY-MM-DD ddd' showToday />
+          <Input placeholder='YYYY-MM-DD ddd' />
         </Form.Item>
+
         <Form.Item
           name='eventTime'
           label='Event Time'
-          rules={[{ required: true, message: "Please enter event time!" }]}
+          rules={getAntdInputValidation()}
         >
-          <Select className='rounded-sm'>
-            <Option value='00:00'>12:00 AM</Option>
-            <Option value='01:00'>1:00 AM</Option>
-            <Option value='02:00'>2:00 AM</Option>
-            <Option value='03:00'>3:00 AM</Option>
-            <Option value='04:00'>4:00 AM</Option>
-            <Option value='05:00'>5:00 AM</Option>
-            <Option value='06:00'>6:00 AM</Option>
-            <Option value='07:00'>7:00 AM</Option>
-            <Option value='08:00'>8:00 AM</Option>
-            <Option value='09:00'>9:00 AM</Option>
-            <Option value='10:00'>10:00 AM</Option>
-            <Option value='11:00'>11:00 AM</Option>
-            <Option value='12:00'>12:00 PM</Option>
-            <Option value='13:00'>1:00 PM</Option>
-            <Option value='14:00'>2:00 PM</Option>
-            <Option value='15:00'>3:00 PM</Option>
-            <Option value='16:00'>4:00 PM</Option>
-            <Option value='17:00'>5:00 PM</Option>
-            <Option value='18:00'>6:00 PM</Option>
-            <Option value='19:00'>7:00 PM</Option>
-            <Option value='20:00'>8:00 PM</Option>
-            <Option value='21:00'>9:00 PM</Option>
-            <Option value='22:00'>10:00 PM</Option>
-            <Option value='23:00'>11:00 PM</Option>
+          <Select onChange={(value) => setEventTime(value)}>
+            {/* Options for event time */}
           </Select>
         </Form.Item>
+
         <Form.Item
           name='description'
           label='Event Description'
-          rules={[{ required: true, message: "Please enter Description!" }]}
+          rules={getAntdInputValidation()}
         >
-          <Input.TextArea
-            className='flex h-20 rounded-sm shadow-none'
-            placeholder='Event Description'
-          />
+          <Input.TextArea placeholder='Event Description' />
         </Form.Item>
       </Form>
     </Modal>

@@ -43,6 +43,10 @@ const inventorySchema = new mongoose.Schema(
         return this.inventoryType === "in";
       },
     },
+    _id: {
+      type: mongoose.Types.ObjectId, // Define _id field as ObjectId
+      auto: true, // Automatically generated ObjectId
+    },
   },
   { timestamps: true }
 );

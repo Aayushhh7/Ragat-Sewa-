@@ -1,52 +1,48 @@
-import { Modal, Form, Radio, Input, Select, message } from "antd";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Modal, Form, Button, Radio, message, Select, Input } from "antd";
+import { UpdateInventory, AddInventory } from "../../../apicalls/inventory";
 import { getAntdInputValidation } from "../../../utils/helper";
-import { SetLoading } from "../../../redux/loadersSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { AddInventory } from "../../../apicalls/inventory";
 
-const { Option } = Select;
-
-function InventoryForm({ open, setOpen, selectedProduct, reloadData }) {
-  const { currentUser } = useSelector((state) => state.users);
+function InventoryForm({ open, setOpen, initialValues, reloadData }) {
   const [form] = Form.useForm();
-  const [inventoryType, setInventoryType] = useState("in");
-  const dispatch = useDispatch();
+  const [inventoryType, setInventoryType] = useState(initialValues ? initialValues.inventoryType : "in");
+
+  useEffect(() => {
+    if (initialValues) {
+      form.setFieldsValue(initialValues);
+    }
+  }, [initialValues]);
 
   const onFinish = async (values) => {
     try {
-      dispatch(SetLoading(true));
-
-      const response = await AddInventory({
-        ...values,
-        inventoryType,
-        organization: currentUser._id,
-      });
-
-      dispatch(SetLoading(false));
+      const response = initialValues
+        ? await UpdateInventory(initialValues._id, values) // Pass initialValues._id
+        : await AddInventory({ ...values, inventoryType });
+      
       if (response.success) {
-        reloadData();
-        message.success("Inventory Added Successfully");
-        setOpen(false);
+        message.success(response.message);
+        reloadData(); // Reload data after successful update
+        setOpen(false); // Close InventoryForm after successful update
       } else {
         throw new Error(response.message);
       }
     } catch (error) {
       message.error(error.message);
-      dispatch(SetLoading(false));
     }
   };
-
   return (
     <Modal
-      title='ADD INVENTORY'
+      title={initialValues ? "EDIT INVENTORY" : "ADD INVENTORY"}
       open={open}
       onCancel={() => setOpen(false)}
-      onOk={() => {
-        form.submit();
-      }}
-      centered
-      okButtonProps={{ style: { backgroundColor: "#6a0b37" } }}
+      footer={[
+        <Button key="cancel" onClick={() => setOpen(false)}>
+          Cancel
+        </Button>,
+        <Button key="submit" type="primary" onClick={() => form.submit()}>
+          Submit
+        </Button>,
+      ]}
     >
       <Form
         layout='vertical'
