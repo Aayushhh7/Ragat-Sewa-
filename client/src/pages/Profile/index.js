@@ -8,6 +8,7 @@ import Organizations from "./Organizations";
 import Events from "./OrgEvents";
 import Volunteers from "./EventVolunteers";
 import InventoryTable from "../../components/InventoryTable";
+import Footer from "../../components/Footer";
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.users);
@@ -66,6 +67,7 @@ function Profile() {
           </>
         )}
       </Tabs>
+      <Footer/>
     </div>
   );
 }

@@ -5,6 +5,7 @@ import { SetLoading } from "../../redux/loadersSlice";
 import { GetAllBloodGroupsInInventory } from "./../../apicalls/dashboard";
 import { getLoggedInUserName } from "./../../utils/helper";
 import InventoryTable from "../../components/InventoryTable";
+import Footer from "../../components/Footer";
 
 function Home() {
   const { currentUser } = useSelector((state) => state.users);
@@ -121,6 +122,7 @@ function Home() {
           />
         </div>
       )}
+      <Footer/>
     </div>
   );
 }

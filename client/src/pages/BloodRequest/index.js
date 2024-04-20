@@ -6,6 +6,7 @@ import banner2 from "../../images/image2.jpg";
 import { getAntdInputValidation } from "../../utils/helper";
 import { useDispatch } from "react-redux";
 import { SetLoading } from "../../redux/loadersSlice";
+import Footer from "../../components/Footer";
 
 const { Option } = Select;
 
@@ -114,6 +115,7 @@ function BloodDonationForm() {
           </Form.Item>
         </Form>
       </div>
+      <Footer/>
     </div>
   );
 }

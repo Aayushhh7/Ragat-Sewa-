@@ -7,7 +7,7 @@ import { GetInventory, DeleteInventory } from "../../../apicalls/inventory";
 import { getDateformat } from "../../../utils/helper"; 
 
 function Inventory() {
-  const [data, setData] = useState([]);
+  const [data, setData] = useState(null); // Modified initialization
   const [open, setOpen] = useState(false);
   const [initialValues, setInitialValues] = useState(null);
   const dispatch = useDispatch();
@@ -128,7 +128,7 @@ function Inventory() {
       </div>
       <Table
         columns={columns}
-        dataSource={data}
+        dataSource={data || []} // Handling null case
         className='mt-3'
       />
       {open && (

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "./../../components/Navbar";
+import Footer from "../../components/Footer";
 const AboutUs = () => {
   return (
     <div>
@@ -85,6 +86,7 @@ const AboutUs = () => {
         <p className='text-lg'>Email: ragatsewa@gmail.com</p>
         <p className='text-lg'>Phone: +977 9806073373</p>
       </div>
+      <Footer/>
     </div>
   );
 };

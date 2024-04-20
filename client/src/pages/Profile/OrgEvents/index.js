@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { GetEventsByOrganization, DeleteEvent } from "../../../apicalls/events";
 import { SetLoading } from "../../../redux/loadersSlice";
 import EventForm from "./EventForm";
-import { getDateformat } from "../../../utils/helper";
+import { getDateformat } from './../../../utils/helper';
 
 function Event() {
   const [data, setData] = useState([]);
@@ -96,7 +96,8 @@ function Event() {
     {
       title: "Posted Date",
       dataIndex: "createdAt",
-      render: (text) => getDateformat(text),
+      key:"timestamp",
+      render : (text) => getDateformat(text)
     },
     {
     title: "Actions",

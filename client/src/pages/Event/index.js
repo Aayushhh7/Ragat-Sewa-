@@ -6,6 +6,7 @@ import { SetLoading } from "../../redux/loadersSlice";
 import moment from "moment";
 import VolunteerRegistrationForm from "./volunteerRegistrationForm";
 import { ShareAltOutlined } from "@ant-design/icons";
+import Footer from "../../components/Footer";
 
 function BloodDonationEvents() {
   const [data, setData] = useState([]);
@@ -191,6 +192,7 @@ function BloodDonationEvents() {
           )}
         </Modal>
       </div>
+      <Footer/>
     </div>
   );
 }

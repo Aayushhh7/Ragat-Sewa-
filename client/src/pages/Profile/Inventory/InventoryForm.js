@@ -2,10 +2,16 @@ import React, { useState, useEffect } from "react";
 import { Modal, Form, Button, Radio, message, Select, Input } from "antd";
 import { UpdateInventory, AddInventory } from "../../../apicalls/inventory";
 import { getAntdInputValidation } from "../../../utils/helper";
+import { useDispatch, useSelector } from "react-redux";
+import { SetLoading } from "../../../redux/loadersSlice";
 
 function InventoryForm({ open, setOpen, initialValues, reloadData }) {
   const [form] = Form.useForm();
-  const [inventoryType, setInventoryType] = useState(initialValues ? initialValues.inventoryType : "in");
+  const { currentUser } = useSelector((state) => state.users);
+  const [inventoryType, setInventoryType] = useState(
+    initialValues ? initialValues.inventoryType : "in"
+  );
+  const dispatch = useDispatch();
 
   useEffect(() => {
     if (initialValues) {
@@ -15,10 +21,15 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
 
   const onFinish = async (values) => {
     try {
+      dispatch(SetLoading(true));
       const response = initialValues
         ? await UpdateInventory(initialValues._id, values) // Pass initialValues._id
-        : await AddInventory({ ...values, inventoryType });
-      
+        : await AddInventory({
+            ...values,
+            inventoryType,
+            organization: currentUser._id,
+          });
+
       if (response.success) {
         message.success(response.message);
         reloadData(); // Reload data after successful update
@@ -28,6 +39,7 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
       }
     } catch (error) {
       message.error(error.message);
+      dispatch(SetLoading(false));
     }
   };
   return (
@@ -36,10 +48,16 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
       open={open}
       onCancel={() => setOpen(false)}
       footer={[
-        <Button key="cancel" onClick={() => setOpen(false)}>
+        <Button key='cancel' onClick={() => setOpen(false)}>
           Cancel
         </Button>,
-        <Button key="submit" type="primary" onClick={() => form.submit()}>
+        <Button
+          key='submit'
+          type='primary'
+          htmlType='submit'
+          className='rounded bg-primary-color text-white  active:scale-[.98] active:duration-75 transition-all ease-in-out '
+          onClick={() => form.submit()}
+        >
           Submit
         </Button>,
       ]}

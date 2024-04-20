@@ -4,6 +4,7 @@ const Event = require("../models/eventModel");
 const mongoose = require("mongoose");
 
 // Post Events
+// Post Events
 router.post("/post-event", authMiddleware, async (req, res) => {
   try {
     const {
@@ -36,7 +37,7 @@ router.post("/post-event", authMiddleware, async (req, res) => {
       .status(201)
       .json({ success: true, message: "Event posted successfully" });
   } catch (error) {
-    console.error("Error posting event:", error); // Log detailed error message
+    console.error("Error posting event:", error);
     res.status(500).json({ success: false, message: "Internal Server Error" });
   }
 });
@@ -92,6 +93,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
 });
 
 //Update Event by ID
+// Update Event by ID
 router.put("/update/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;
@@ -100,13 +102,18 @@ router.put("/update/:id", authMiddleware, async (req, res) => {
       throw new Error("Event not found");
     }
 
-    // Update inventory fields
+    // Update event fields
     Object.keys(req.body).forEach((key) => {
       event[key] = req.body[key];
     });
 
+    // Save the updated event to the database
     await event.save();
-    return res.send({ success: true, message: "Event updated successfully" });
+
+    return res.send({
+      success: true,
+      message: "Event updated successfully",
+    });
   } catch (error) {
     return res.send({ success: false, message: error.message });
   }
