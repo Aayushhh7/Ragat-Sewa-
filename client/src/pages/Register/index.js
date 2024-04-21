@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import Nav from "./../../components/Nav";
-import { Form, Input, Radio, Button, message } from "antd";
+import { Form, Input, Radio, Button, message, Select } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import OrgHospistalForm from "./OrgHospistalForm";
 import { RegisterUser } from "../../apicalls/users";
@@ -96,10 +96,16 @@ const Register = () => {
                 className='font-semibold'
                 rules={getAntdInputValidation()}
               >
-                <Input
-                  placeholder='Blood Group'
-                  className='border rounded-sm py-1'
-                />
+                <Select className='rounded-sm'>
+                  <Option value='A+'>A+</Option>
+                  <Option value='A-'>A-</Option>
+                  <Option value='B+'>B+</Option>
+                  <Option value='B-'>B-</Option>
+                  <Option value='AB+'>AB+</Option>
+                  <Option value='AB-'>AB-</Option>
+                  <Option value='O+'>O+</Option>
+                  <Option value='O-'>O-</Option>
+                </Select>
               </Form.Item>
               <Form.Item
                 label='Address'
@@ -116,7 +122,13 @@ const Register = () => {
                 label='Email'
                 name='email'
                 className='font-semibold'
-                rules={getAntdInputValidation()}
+                rules={[
+                  ...getAntdInputValidation(),
+                  {
+                    type: "email",
+                    message: "Please enter a valid email address!",
+                  },
+                ]}
               >
                 <Input placeholder='Email' className='border rounded-sm py-1' />
               </Form.Item>
@@ -124,7 +136,13 @@ const Register = () => {
                 label='Password'
                 name='password'
                 className='font-semibold'
-                rules={getAntdInputValidation()}
+                rules={[
+                  ...getAntdInputValidation(),
+                  {
+                    min: 8,
+                    message: "Password must be at least 8 characters long!",
+                  },
+                ]}
               >
                 <Input.Password
                   type='password'

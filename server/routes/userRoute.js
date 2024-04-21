@@ -116,22 +116,6 @@ router.get("/get-all-donors", authMiddleWare, async (req, res) => {
     const uniqueDonorIds = await Inventory.distinct("donor", {
       organization,
     });
-
-    // Another way to fetch the unique donor ids
-    // aggregate([
-    //   {
-    //     $match: {
-    //       inventoryType: "in",
-    //       organization,
-    //     },
-    //   },
-    //   {
-    //     $group: {
-    //       _id: "$donor",
-    //     },
-    //   },
-    // ]);
-
     const donors = await User.find({
       _id: { $in: uniqueDonorIds },
     });

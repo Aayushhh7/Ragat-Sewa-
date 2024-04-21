@@ -97,7 +97,7 @@ function ProtectedPage({ children }) {
                 className='ri-logout-box-r-line ml-5 cursor-pointer'
                 onClick={() => {
                   localStorage.removeItem("token");
-                  navigate("/login");
+                  navigate("/");
                 }}
               ></i>
             </div>

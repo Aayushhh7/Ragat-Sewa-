@@ -10,7 +10,7 @@ const userSchema = new mongoose.Schema(
     name: {
       type: String,
       required: function () {
-        if (tthis.userType === "donor") {
+        if (this.userType === "donor") {
           return true;
         }
         return false;
@@ -53,6 +53,7 @@ const userSchema = new mongoose.Schema(
     // is only required if userType is donor
     bloodGroup: {
       type: String,
+      enum: ["O+", "O-", "AB+", "AB-", "A+", "A-", "B+", "B-"],
       required: function () {
         if (this.userType == "donor") {
           return true;

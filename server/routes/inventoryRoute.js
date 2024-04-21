@@ -138,6 +138,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
   }
 });
 
+// Update inventory by ID
 router.put("/update/:id", authMiddleware, async (req, res) => {
   try {
     const { id } = req.params;

@@ -31,7 +31,7 @@ function BloodDonationForm() {
   return (
     <div>
       <div className='flex mt-3 justify-center'>
-        <img src={banner} alt='banner' className='flex w-[92%] h-56' />
+        <img src={banner} alt='banner' className='flex w-[100%] h-56' />
       </div>
       <div className='flex mt-2 justify-center'>
         <img src={banner2} alt='banner' className='flex h-28' />

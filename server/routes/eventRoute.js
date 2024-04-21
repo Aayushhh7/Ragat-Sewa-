@@ -92,7 +92,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
   }
 });
 
-//Update Event by ID
+
 // Update Event by ID
 router.put("/update/:id", authMiddleware, async (req, res) => {
   try {
@@ -107,7 +107,6 @@ router.put("/update/:id", authMiddleware, async (req, res) => {
       event[key] = req.body[key];
     });
 
-    // Save the updated event to the database
     await event.save();
 
     return res.send({

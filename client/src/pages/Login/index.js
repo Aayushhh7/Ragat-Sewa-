@@ -69,7 +69,13 @@ const Login = () => {
             label='Email'
             name='email'
             className='font-semibold'
-            rules={getAntdInputValidation()}
+            rules={[
+              ...getAntdInputValidation(),
+              {
+                type: "email",
+                message: "Please enter a valid email address!",
+              },
+            ]}
           >
             <Input placeholder='Email' className='border rounded-sm py-1' />
           </Form.Item>

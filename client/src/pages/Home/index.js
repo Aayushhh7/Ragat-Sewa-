@@ -3,7 +3,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { message } from "antd";
 import { SetLoading } from "../../redux/loadersSlice";
 import { GetAllBloodGroupsInInventory } from "./../../apicalls/dashboard";
-import { getLoggedInUserName } from "./../../utils/helper";
 import InventoryTable from "../../components/InventoryTable";
 import Footer from "../../components/Footer";
 

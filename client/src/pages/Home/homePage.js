@@ -4,7 +4,6 @@ import { Table } from "antd";
 import banner from "../../images/banner.png";
 import donation from "../../images/donation.png";
 import upcommingeventsIMG from "../../images/View Upcomming Events.png";
-import { getLoggedInUserName } from "../../utils/helper";
 import Navbar from "./../../components/Navbar";
 import Footer from "../../components/Footer";
 
@@ -42,8 +41,6 @@ const Home = () => {
       <div className="flex justify-start my-3 mx-12">
         <div className="container mt-2">
           <span className="text-2xl font-semibold">
-            {/* Welcome {getLoggedInUserName(currentUser)} */}
-            {/* {currentUser.userType} */}
           </span>
           <div className="flex mt-3 justify-center border-b">
             <img src={banner} alt="banner" className="flex w-1/2" />
