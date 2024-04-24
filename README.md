@@ -6,14 +6,12 @@
 MERN stack is the idea of using Javascript/Node for fullstack web development.
 
 ## Clone or Download
-```bash
+```terminal
 $ git clone https://github.com/Aayushhh7/Ragat-Sewa-.git
 $ npm i
-
-
+```
 
 ## Project Structure
-
 ```terminal
 LICENSE
 package.json
@@ -25,17 +23,17 @@ client/
 ...
 ```
 
-## Prerequisites
+# Usage (run fullstack app on your machine)
 
+## Prerequisites
 - [MongoDB](https://www.mongodb.com/)
 - [Node](https://nodejs.org/en/download/) ^10.0.0
 - [npm](https://nodejs.org/en/download/package-manager/)
 
-Notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
+notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
 
 ## Client-side usage(PORT: 3000)
-
-````terminal
+```terminal
 $ cd client          // go to client folder
 $ npm i    // npm install packages
 $ npm run start        // run it locally
@@ -54,7 +52,7 @@ run the script at the first level:
 // in the root level
 $ cd server
 $ echo "JWT_SECRET=YOUR_JWT_SECRET" >> src/.env
-````
+```
 
 ### Start
 
@@ -65,8 +63,8 @@ $ npm run dev // run it locally
 $ npm run build // this will build the server code to es5 js codes and generate a dist file
 ```
 
-```
 
+```
 
 ## Standard
 
@@ -75,4 +73,3 @@ $ npm run build // this will build the server code to es5 js codes and generate 
 
 Email Me: ayushkhatiwada420@gmail.com (welcome, say hi)
 
-```
