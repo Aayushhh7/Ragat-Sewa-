@@ -11,7 +11,10 @@ $ git clone https://github.com/Aayushhh7/Ragat-Sewa-.git
 $ npm i
 
 
+
 ## Project Structure
+
+```terminal
 LICENSE
 package.json
 server/
@@ -20,7 +23,7 @@ server/
 client/
    package.json
 ...
-
+```
 
 ## Prerequisites
 
@@ -28,7 +31,7 @@ client/
 - [Node](https://nodejs.org/en/download/) ^10.0.0
 - [npm](https://nodejs.org/en/download/package-manager/)
 
-notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
+Notice, you need client and server runs concurrently in different terminal session, in order to make them talk to each other
 
 ## Client-side usage(PORT: 3000)
 
@@ -59,22 +62,10 @@ $ echo "JWT_SECRET=YOUR_JWT_SECRET" >> src/.env
 $ cd server   // go to server folder
 $ npm i       // npm install packages
 $ npm run dev // run it locally
-$ npx nodemon server/server
+$ npm run build // this will build the server code to es5 js codes and generate a dist file
 ```
 
 ```
-# Dependencies(tech-stacks)
-Client-side | Server-side
---- | ---
-axios: ^0.15.3 | bcrypt-nodejs: ^0.0.3
-babel-preset-stage-1: ^6.1.18|body-parser: ^1.15.2
-lodash: ^3.10.1 | cors: ^2.8.1
-react: ^16.2.0 | dotenv: ^2.0.0
-react-dom: ^16.2.0 | express: ^4.14.0
-react-redux: ^4.0.0 | jwt-simple: ^0.5.1
-react-router-dom: ^4.2.2 | mongoose: ^4.7.4
-redux: ^3.7.2 | morgan: ^1.7.0
-
 
 
 ## Standard
