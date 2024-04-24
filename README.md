@@ -1,25 +1,17 @@
-< align="center">
-🌐 Ragat Sewa Blood Bank Management System - MERN Stack
-
-</h1>
-<p align="center">
-MongoDB, Expressjs, React/Redux, Nodejs
-</p>
+<h1 align="center">🌐 Ragat Sewa Blood Bank Management System - MERN Stack</h1>
+<p align="center">MongoDB, Expressjs, React/Redux, Nodejs</p>
 
 > MERN is a fullstack implementation in MongoDB, Expressjs, React/Redux, Nodejs.
 
 MERN stack is the idea of using Javascript/Node for fullstack web development.
 
 ## Clone or Download
-
-```terminal
+```bash
 $ git clone https://github.com/Aayushhh7/Ragat-Sewa-.git
 $ npm i
-```
+
 
 ## Project Structure
-
-```terminal
 LICENSE
 package.json
 server/
@@ -28,7 +20,7 @@ server/
 client/
    package.json
 ...
-```
+
 
 ## Prerequisites
 
@@ -67,7 +59,7 @@ $ echo "JWT_SECRET=YOUR_JWT_SECRET" >> src/.env
 $ cd server   // go to server folder
 $ npm i       // npm install packages
 $ npm run dev // run it locally
-$ npm run build // this will build the server code to es5 js codes and generate a dist file
+$ npx nodemon server/server
 ```
 
 ```
