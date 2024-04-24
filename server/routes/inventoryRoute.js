@@ -2,10 +2,9 @@ const router = require("express").Router();
 const Inventory = require("../models/inventoryModel");
 const User = require("../models/userModel");
 const authMiddleware = require("../middlewares/authMiddleware");
-const { message } = require("antd");
 const mongoose = require("mongoose");
 
-//add inventory
+// Add inventory
 router.post("/add", authMiddleware, async (req, res) => {
   try {
     // validate email and InventoryType
@@ -26,6 +25,7 @@ router.post("/add", authMiddleware, async (req, res) => {
       const requestedQuantity = req.body.quantityofBlood;
       const organization = new mongoose.Types.ObjectId(req.body.userId);
 
+      // Retrieve total in inventory of requested blood group
       const totalInofRequestedGroup = await Inventory.aggregate([
         {
           $match: {
@@ -42,8 +42,13 @@ router.post("/add", authMiddleware, async (req, res) => {
         },
       ]);
 
-      const totalIn = totalInofRequestedGroup[0].total;
+      // Calculate total in inventory
+      const totalIn =
+        totalInofRequestedGroup.length > 0
+          ? totalInofRequestedGroup[0].total
+          : 0;
 
+      // Retrieve total out inventory of requested blood group
       const totalOutofRequestedGroup = await Inventory.aggregate([
         {
           $match: {
@@ -60,8 +65,13 @@ router.post("/add", authMiddleware, async (req, res) => {
         },
       ]);
 
-      const totalOut = totalOutofRequestedGroup[0]?.total || 0;
+      // Calculate total out inventory
+      const totalOut =
+        totalOutofRequestedGroup.length > 0
+          ? totalOutofRequestedGroup[0].total
+          : 0;
 
+      // Calculate available quantity of requested blood group
       const availableQuantityofRequestedGroup = totalIn - totalOut;
 
       if (availableQuantityofRequestedGroup < requestedQuantity) {
@@ -75,7 +85,7 @@ router.post("/add", authMiddleware, async (req, res) => {
       req.body.donor = user._id;
     }
 
-    // add inventory
+    // Add inventory
     const inventory = new Inventory(req.body);
     await inventory.save();
 
@@ -88,6 +98,7 @@ router.post("/add", authMiddleware, async (req, res) => {
 //get inventory
 router.get("/get", authMiddleware, async (req, res) => {
   try {
+    // Get inventory for the organization
     const inventory = await Inventory.find({ organization: req.body.userId })
       .sort({ createdAt: -1 })
       .populate("donor")
@@ -104,6 +115,7 @@ router.get("/get", authMiddleware, async (req, res) => {
 //get inventory with filter
 router.post("/filter", authMiddleware, async (req, res) => {
   try {
+    // Get inventory with filters
     const inventory = await Inventory.find(req.body.filters)
       .limit(req.body.limit || 10)
       .sort({ createdAt: -1 })
@@ -128,6 +140,7 @@ router.delete("/delete/:id", authMiddleware, async (req, res) => {
       throw new Error("Inventory not found");
     }
 
+    // Delete inventory
     await inventory.deleteOne(); // Use deleteOne() method instead of delete()
     return res.send({
       success: true,
@@ -153,11 +166,13 @@ router.put("/update/:id", authMiddleware, async (req, res) => {
     });
 
     await inventory.save();
-    return res.send({ success: true, message: "Inventory updated successfully" });
+    return res.send({
+      success: true,
+      message: "Inventory updated successfully",
+    });
   } catch (error) {
     return res.send({ success: false, message: error.message });
   }
 });
-
 
 module.exports = router;
