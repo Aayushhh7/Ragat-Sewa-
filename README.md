@@ -36,10 +36,10 @@ notice, you need client and server runs concurrently in different terminal sessi
 ```terminal
 $ cd client          // go to client folder
 $ npm i    // npm install packages
-$ npm run start        // run it locally
+$ npm start        // run it 
 
 `
-
+```
 ## Server-side usage(PORT: 5000)
 
 ### Prepare your secret
@@ -57,19 +57,11 @@ $ echo "JWT_SECRET=YOUR_JWT_SECRET" >> src/.env
 ### Start
 
 ```terminal
-$ cd server   // go to server folder
 $ npm i       // npm install packages
-$ npm run dev // run it locally
-$ npm run build // this will build the server code to es5 js codes and generate a dist file
+$ npx nodemon server/server
 ```
 
 
-```
 
-## Standard
-
-[![JavaScript Style Guide](https://cdn.rawgit.com/standard/standard/master/badge.svg)](https://github.com/standard/standard)
-
-
-Email Me: ayushkhatiwada420@gmail.com (welcome, say hi)
+Email Me: ayushkhatiwada420@gmail.com 
 
