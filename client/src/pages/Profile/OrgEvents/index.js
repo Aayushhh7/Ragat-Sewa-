@@ -1,17 +1,17 @@
 import { Button, Table, message, Popconfirm } from "antd";
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { GetEventsByOrganization, DeleteEvent } from "../../../apicalls/events";
 import { SetLoading } from "../../../redux/loadersSlice";
 import EventForm from "./EventForm";
-import { getDateformat } from './../../../utils/helper';
+import { getDateformat } from "./../../../utils/helper";
 
 function Event() {
   const [data, setData] = useState([]);
   const [open, setOpen] = useState(false);
   const [initialValues, setInitialValues] = useState(null);
   const dispatch = useDispatch();
-  
+
   useEffect(() => {
     getData();
   }, []);
@@ -96,11 +96,11 @@ function Event() {
     {
       title: "Posted Date",
       dataIndex: "createdAt",
-      key:"timestamp",
-      render : (text) => getDateformat(text)
+      key: "timestamp",
+      render: (text) => getDateformat(text),
     },
     {
-    title: "Actions",
+      title: "Actions",
       dataIndex: "actions",
       render: (text, record) => (
         <span>
@@ -129,7 +129,7 @@ function Event() {
           </Popconfirm>
         </span>
       ),
-    }
+    },
   ];
 
   return (
@@ -141,7 +141,14 @@ function Event() {
       </div>
       {/* Render the Table component with data and columns */}
       <Table dataSource={data} columns={columns} className='mt-3' />
-      {open && <EventForm open={open} setOpen={setOpen} initialValues={initialValues} reloadData={getData} />}
+      {open && (
+        <EventForm
+          open={open}
+          setOpen={setOpen}
+          initialValues={initialValues}
+          reloadData={getData}
+        />
+      )}
     </div>
   );
 }
