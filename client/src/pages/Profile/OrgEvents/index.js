@@ -1,5 +1,5 @@
 import { Button, Table, message, Popconfirm } from "antd";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { GetEventsByOrganization, DeleteEvent } from "../../../apicalls/events";
 import { SetLoading } from "../../../redux/loadersSlice";
@@ -12,18 +12,17 @@ function Event() {
   const [initialValues, setInitialValues] = useState(null);
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    getData();
-  }, []);
-
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(SetLoading(true));
       const response = await GetEventsByOrganization();
       console.log(response); // Log the entire response object
       dispatch(SetLoading(false));
       if (response.success) {
-        setData(response.data);
+        const sortedData = response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setData(sortedData);
       } else {
         throw new Error(response.message);
       }
@@ -31,7 +30,11 @@ function Event() {
       message.error(error.message);
       dispatch(SetLoading(false));
     }
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const handleEdit = (record) => {
     setOpen(true);
@@ -55,7 +58,6 @@ function Event() {
     }
   };
 
-  // Define columns for the table
   const columns = [
     {
       title: "Event Name",
@@ -105,24 +107,24 @@ function Event() {
       render: (text, record) => (
         <span>
           <Button
-            type='primary'
+            type="primary"
             block
-            className='rounded bg-primary-color text-white mb-2'
+            className="rounded bg-primary-color text-white mb-2"
             onClick={() => handleEdit(record)}
           >
             Edit
-          </Button>{" "}
+          </Button>
           <Popconfirm
-            title='Are you sure you want to delete this inventory item?'
+            title="Are you sure you want to delete this event?"
             onConfirm={() => handleDelete(record._id)}
-            okText='Yes'
-            cancelText='No'
+            okText="Yes"
+            cancelText="No"
             okButtonProps={{ style: { backgroundColor: "#6a0b37" } }}
           >
             <Button
-              type='secondary'
+              type="secondary"
               block
-              className='rounded bg-secondary text-white'
+              className="rounded bg-secondary text-white"
             >
               Delete
             </Button>
@@ -134,13 +136,12 @@ function Event() {
 
   return (
     <div>
-      <div className='flex justify-end'>
-        <Button type='default' onClick={() => setOpen(true)}>
-          Post Events
+      <div className="flex justify-end">
+        <Button type="default" onClick={() => setOpen(true)}>
+          Post Event
         </Button>
       </div>
-      {/* Render the Table component with data and columns */}
-      <Table dataSource={data} columns={columns} className='mt-3' />
+      <Table dataSource={data} columns={columns} className="mt-3" />
       {open && (
         <EventForm
           open={open}

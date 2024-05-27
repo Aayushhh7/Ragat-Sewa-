@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { SetLoading } from "../../../redux/loadersSlice";
 import { Table, message } from "antd";
@@ -6,16 +6,19 @@ import { GetAllDonorsofOrganization } from "../../../apicalls/users";
 import { getDateformat } from "../../../utils/helper";
 
 function Donors() {
-  const [data, setData] = React.useState([]);
+  const [data, setData] = useState([]);
   const dispatch = useDispatch();
 
-  const getData = async () => {
+  const getData = useCallback(async () => {
     try {
       dispatch(SetLoading(true));
       const response = await GetAllDonorsofOrganization();
       dispatch(SetLoading(false));
       if (response.success) {
-        setData(response.data);
+        const sortedData = response.data.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        );
+        setData(sortedData);
       } else {
         throw new Error(response.message);
       }
@@ -23,7 +26,11 @@ function Donors() {
       message.error(error.message);
       dispatch(SetLoading(false));
     }
-  };
+  }, [dispatch]);
+
+  useEffect(() => {
+    getData();
+  }, [getData]);
 
   const columns = [
     {
@@ -53,12 +60,9 @@ function Donors() {
     },
   ];
 
-  React.useEffect(() => {
-    getData();
-  }, []);
   return (
     <div>
-      <Table columns={columns} dataSource={data} className='mt-3' />
+      <Table columns={columns} dataSource={data} className="mt-3" />
     </div>
   );
 }
