@@ -91,6 +91,66 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// Update user profile
+router.put("/update-profile", authMiddleWare, async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const updatedUser = await User.findByIdAndUpdate(userId, req.body, {
+      new: true,
+      runValidators: true,
+    });
+    return res.send({
+      success: true,
+      message: "Profile updated successfully",
+      data: updatedUser,
+    });
+  } catch (error) {
+    return res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
+// Change user password
+router.put("/change-password", authMiddleWare, async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const { currentPassword, newPassword } = req.body;
+
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.send({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    const validPassword = await bcrypt.compare(currentPassword, user.password);
+    if (!validPassword) {
+      return res.send({
+        success: false,
+        message: "Current password is incorrect",
+      });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(newPassword, salt);
+    user.password = hashedPassword;
+    await user.save();
+
+    return res.send({
+      success: true,
+      message: "Password changed successfully",
+    });
+  } catch (error) {
+    return res.send({
+      success: false,
+      message: error.message,
+    });
+  }
+});
+
 //get current user
 router.get("/get-current-user", authMiddleWare, async (req, res) => {
   try {

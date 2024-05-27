@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { message } from "antd";
 import { GetCurrentUser } from "../apicalls/users";
 import { useNavigate, Link, useLocation } from "react-router-dom";
@@ -16,13 +16,12 @@ function ProtectedPage({ children }) {
   const [activeLink, setActiveLink] = useState(null);
   const location = useLocation();
 
-  const getCurrentUser = async () => {
+  const getCurrentUser = useCallback(async () => {
     try {
       dispatch(SetLoading(true));
       const response = await GetCurrentUser();
       dispatch(SetLoading(false));
       if (response.success) {
-        message.success(response.message);
         dispatch(SetCurrentUser(response.data));
       } else {
         throw new Error(response.message);
@@ -31,7 +30,7 @@ function ProtectedPage({ children }) {
       dispatch(SetLoading(false));
       message.error(error.message);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -42,7 +41,7 @@ function ProtectedPage({ children }) {
     const { pathname } = location;
     // Set active link based on the current pathname
     setActiveLink(pathname);
-  }, [location]);
+  }, [location, getCurrentUser, navigate]); // Add 'getCurrentUser' and 'navigate' to the dependency array
 
   return (
     currentUser && (
@@ -56,7 +55,10 @@ function ProtectedPage({ children }) {
             </Link>
           </div>
           <div className='flex gap-12 items-center'>
-            <Link to='/index' className={activeLink === "/index" ? "active-link" : null}>
+            <Link
+              to='/index'
+              className={activeLink === "/index" ? "active-link" : null}
+            >
               Home
               {activeLink === "/index" && <div className='underline'></div>}
             </Link>

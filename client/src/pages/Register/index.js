@@ -8,6 +8,8 @@ import { getAntdInputValidation } from "../../utils/helper";
 import { useDispatch } from "react-redux";
 import { SetLoading } from "../../redux/loadersSlice";
 
+const { Option } = Select;
+
 const Register = () => {
   const [type, setType] = React.useState("donor");
   const navigate = useNavigate();
@@ -37,7 +39,7 @@ const Register = () => {
     if (localStorage.getItem("token")) {
       navigate("/");
     }
-  }, []);
+  }, [navigate]); // Add 'navigate' to the dependency array
 
   return (
     <div>
@@ -67,7 +69,6 @@ const Register = () => {
 
           {type === "donor" && (
             <>
-              {""}
               <Form.Item
                 label='Name'
                 name='name'

@@ -7,6 +7,8 @@ import { getAntdInputValidation } from "../../../utils/helper";
 import dayjs from "dayjs";
 import moment from "moment";
 
+const { Option } = Select; // Add this line to import Option
+
 function EventForm({ open, setOpen, initialValues, reloadData }) {
   const [form] = Form.useForm();
   const [eventTime, setEventTime] = useState(null);
@@ -27,7 +29,7 @@ function EventForm({ open, setOpen, initialValues, reloadData }) {
         dayjs(initialValues.eventDate, "YYYY-MM-DD ddd").format("dddd")
       );
     }
-  }, [initialValues]);
+  }, [initialValues, form]); // Add 'form' to the dependency array
 
   const handleDateChange = (date, dateString) => {
     setSelectedDate(dateString);
@@ -124,7 +126,7 @@ function EventForm({ open, setOpen, initialValues, reloadData }) {
           rules={getAntdInputValidation()}
         >
           <Select onChange={(value) => setEventTime(value)}>
-          <Option value='00:00'>12:00 AM</Option>
+            <Option value='00:00'>12:00 AM</Option>
             <Option value='01:00'>1:00 AM</Option>
             <Option value='02:00'>2:00 AM</Option>
             <Option value='03:00'>3:00 AM</Option>
