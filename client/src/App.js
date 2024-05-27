@@ -1,6 +1,6 @@
 // App.js
 import React from "react";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import Register from "./pages/Register";
 import Home from "./pages/Home/index";
 import Login from "./pages/Login";
@@ -11,7 +11,7 @@ import { useSelector } from "react-redux";
 import Spinner from "./components/Spinner";
 import Profile from "./pages/Profile";
 import Event from "./pages/Event";
-import HomePage from "./pages/Home/homePage"
+import HomePage from "./pages/Home/homePage";
 
 function App() {
   const { loading } = useSelector((state) => state.loaders);
@@ -51,7 +51,7 @@ function App() {
             </ProtectedPage>
           }
         />
-        <Route path='/' element={<HomePage/>} />
+        <Route path='/' element={<HomePage />} />
         <Route path='/aboutus' element={<AboutUs />} />
         <Route path='/login' element={<Login />} />
         <Route path='/register' element={<Register />} />

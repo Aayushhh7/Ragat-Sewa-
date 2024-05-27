@@ -5,6 +5,8 @@ import { getAntdInputValidation } from "../../../utils/helper";
 import { useDispatch, useSelector } from "react-redux";
 import { SetLoading } from "../../../redux/loadersSlice";
 
+const { Option } = Select;
+
 function InventoryForm({ open, setOpen, initialValues, reloadData }) {
   const [form] = Form.useForm();
   const { currentUser } = useSelector((state) => state.users);
@@ -17,7 +19,7 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
     if (initialValues) {
       form.setFieldsValue(initialValues);
     }
-  }, [initialValues]);
+  }, [initialValues, form]); // Add 'form' to the dependency array
 
   const onFinish = async (values) => {
     try {
@@ -42,6 +44,7 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
       dispatch(SetLoading(false));
     }
   };
+
   return (
     <Modal
       title={initialValues ? "EDIT INVENTORY" : "ADD INVENTORY"}

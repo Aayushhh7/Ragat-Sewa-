@@ -30,3 +30,13 @@ export const GetAllOrganizationofDonor = () => {
 export const GetAllOrganizationofHospital = () => {
   return axiosInstance("get", "/api/users/get-all-organizations-of-a-hospital");
 };
+
+export const UpdateUser = async (payload) => {
+  const response = await axiosInstance("put", "/api/users/update-profile", payload);
+  return response;
+};
+
+export const ChangePassword = async (payload) => {
+  const response = await axiosInstance("put", "/api/users/change-password", payload);
+  return response;
+};

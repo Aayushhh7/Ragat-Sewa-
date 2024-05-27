@@ -9,6 +9,9 @@ import Events from "./OrgEvents";
 import Volunteers from "./EventVolunteers";
 import InventoryTable from "../../components/InventoryTable";
 import Footer from "../../components/Footer";
+import UpdateProfile from "./UpdateProfile/UpdateProfile";
+import ChangePasswords from "./UpdateProfile/ChangePassword";
+
 
 function Profile() {
   const { currentUser } = useSelector((state) => state.users);
@@ -66,8 +69,14 @@ function Profile() {
             </Tabs.TabPane>
           </>
         )}
+         <Tabs.TabPane tab="Update Profile" key="10">
+          <UpdateProfile />
+        </Tabs.TabPane>
+        <Tabs.TabPane tab="Change Password" key="11">
+          <ChangePasswords />
+        </Tabs.TabPane>
       </Tabs>
-      <Footer/>
+      <Footer />
     </div>
   );
 }

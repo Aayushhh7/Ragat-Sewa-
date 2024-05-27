@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/Aayushhh7/Ragat-Sewa-#readme",
   "dependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "antd": "^5.14.1",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
