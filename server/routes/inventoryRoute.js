@@ -7,6 +7,11 @@ const mongoose = require("mongoose");
 // Add inventory
 router.post("/add", authMiddleware, async (req, res) => {
   try {
+
+    if (req.body.quantityofBlood <= 0) {
+      throw new Error("Quantity must be greater than 0");
+    }
+
     // validate email and InventoryType
     const user = await User.findOne({ email: req.body.email });
     if (!user) throw new Error("Invalid Email");

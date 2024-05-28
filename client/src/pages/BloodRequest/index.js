@@ -91,7 +91,11 @@ function BloodDonationForm() {
             name='requestEmail'
             label='Email'
             className='font-semibold'
-            rules={getAntdInputValidation()}
+            rules={[
+              { required: true, message: "Please enter your email" },
+              { type: "email", message: "Please enter a valid email" },
+            ]}
+            
           >
             <Input placeholder='Email' className='rounded-sm shadow-none' />
           </Form.Item>

@@ -22,6 +22,11 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
   }, [initialValues, form]); // Add 'form' to the dependency array
 
   const onFinish = async (values) => {
+    if (values.quantityofBlood <= 0) {
+      message.error("Quantity must be greater than 0");
+      return;
+    }
+
     try {
       dispatch(SetLoading(true));
       const response = initialValues
@@ -113,7 +118,15 @@ function InventoryForm({ open, setOpen, initialValues, reloadData }) {
         <Form.Item
           label='Quantity (ML)'
           name='quantityofBlood'
-          rules={getAntdInputValidation()}
+          rules={[
+            ...getAntdInputValidation(),
+            {
+              validator: (_, value) =>
+                value > 0
+                  ? Promise.resolve()
+                  : Promise.reject("Quantity must be greater than 0"),
+            },
+          ]}
         >
           <Input
             placeholder='Quantity'
